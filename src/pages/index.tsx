@@ -10,6 +10,8 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import nextI18nConfig from "../../next-i18next.config.mjs";
 import RootLayout from "~/pages/RootLayout";
 
+import Map from "~/components/Map";
+
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
     ...(await serverSideTranslations(locale, ["landing"], nextI18nConfig, [
@@ -22,7 +24,7 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 export default function Home() {
   const { t } = useTranslation("landing");
   return (
-    <RootLayout>
+    <>
       <Head>
         <title>AG Chile Chico</title>
         <meta
@@ -31,7 +33,8 @@ export default function Home() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
+      <RootLayout>
+        =
         <div className="relative flex h-screen flex-1 items-center justify-center">
           <h1 className="z-20 text-3xl font-bold text-white">
             {t("main-title")}
@@ -45,8 +48,9 @@ export default function Home() {
             className="absolute inset-0 h-full w-full object-cover"
           />
         </div>
+        <Map address="O'higgins 420 Chile Chico" />
         <div className="h-screen bg-gradient-to-b from-pink-200 to-blue-500"></div>
-      </main>
-    </RootLayout>
+      </RootLayout>
+    </>
   );
 }

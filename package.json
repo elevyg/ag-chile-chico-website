@@ -10,6 +10,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@googlemaps/js-api-loader": "^1.16.2",
     "@next-auth/prisma-adapter": "^1.0.7",
     "@next/font": "^13.5.3",
     "@prisma/client": "^5.1.1",
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "@types/eslint": "^8.44.2",
+    "@types/google.maps": "^3.54.2",
     "@types/node": "^18.16.0",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
