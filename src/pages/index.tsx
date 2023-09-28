@@ -12,7 +12,7 @@ import RootLayout from "~/pages/RootLayout";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
-    ...(await serverSideTranslations(locale, ["common"], nextI18nConfig, [
+    ...(await serverSideTranslations(locale, ["landing"], nextI18nConfig, [
       "es",
       "en",
     ])),
@@ -20,11 +20,11 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 });
 
 export default function Home() {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("landing");
   return (
     <RootLayout>
       <Head>
-        <title>Chile Chico Turismo</title>
+        <title>AG Chile Chico</title>
         <meta
           name="description"
           content="Descubre todo lo que necesitas para recorrer Chile Chico"
@@ -43,6 +43,7 @@ export default function Home() {
             className="absolute inset-0 h-full w-full object-cover"
           />
         </div>
+        <div className="h-screen bg-gradient-to-b from-pink-200 to-blue-500"></div>
       </main>
     </RootLayout>
   );
