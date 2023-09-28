@@ -33,7 +33,9 @@ export default function Home() {
       </Head>
       <main>
         <div className="relative flex h-screen flex-1 items-center justify-center">
-          <h1 className="z-20 text-3xl">{t("main-title")}</h1>
+          <h1 className="z-20 text-3xl font-bold text-white">
+            {t("main-title")}
+          </h1>
           <CldImage
             width="1000"
             height="600"
