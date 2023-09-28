@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <main className="relative">
       <Navbar />
-      <div className={raleway.className}>{children}</div>;
+      <div className={raleway.className}>{children}</div>
     </main>
   );
 }

@@ -34,7 +34,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <RootLayout>
-        <div className="relative flex h-screen flex-1 items-center justify-center">
+        <div className="relative flex h-screen flex-1 items-center justify-center ">
           <h1 className="z-20 text-3xl font-bold text-white">
             {t("main-title")}
           </h1>
@@ -47,7 +47,12 @@ export default function Home() {
             className="absolute inset-0 h-full w-full object-cover"
           />
         </div>
-        <Map address="O'higgins 420 Chile Chico" />
+        <div className=" flex flex-col bg-slate-100">
+          <h2 className="my-10 px-5 text-xl">
+            Encuentra los mejores alojamientos y actividades
+          </h2>
+          <Map address="O'higgins 420 Chile Chico" />
+        </div>
         <div className="h-screen bg-gradient-to-b from-pink-200 to-blue-500"></div>
       </RootLayout>
     </>
