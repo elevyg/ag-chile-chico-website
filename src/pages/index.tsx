@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import { CldImage } from "next-cloudinary";
 
 import { api } from "~/utils/api";
 import type { NextPage } from "next";
@@ -7,6 +8,7 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import nextI18nConfig from "../../next-i18next.config.mjs";
+import RootLayout from "~/pages/RootLayout";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -20,7 +22,7 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 export default function Home() {
   const { t } = useTranslation("common");
   return (
-    <>
+    <RootLayout>
       <Head>
         <title>Chile Chico Turismo</title>
         <meta
@@ -30,8 +32,18 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1>{t("main-title")}</h1>
+        <div className="relative flex h-screen flex-1 items-center justify-center">
+          <h1 className="z-20 text-3xl">{t("main-title")}</h1>
+          <CldImage
+            width="1000"
+            height="600"
+            src="ag-chile-chico-website/foto_islas_vhlcy2"
+            sizes="100vw"
+            alt="Description of my image"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        </div>
       </main>
-    </>
+    </RootLayout>
   );
 }
