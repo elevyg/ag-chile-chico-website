@@ -34,7 +34,6 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <RootLayout>
-        =
         <div className="relative flex h-screen flex-1 items-center justify-center">
           <h1 className="z-20 text-3xl font-bold text-white">
             {t("main-title")}
