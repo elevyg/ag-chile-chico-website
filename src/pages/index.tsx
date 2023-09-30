@@ -1,14 +1,11 @@
-import Head from "next/head";
-import Link from "next/link";
 import { CldImage } from "next-cloudinary";
+import Head from "next/head";
 
-import { api } from "~/utils/api";
-import type { NextPage } from "next";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-import nextI18nConfig from "../../next-i18next.config.mjs";
 import RootLayout from "~/pages/RootLayout";
+import nextI18nConfig from "../../next-i18next.config.mjs";
 
 import Map from "~/components/Map";
 
