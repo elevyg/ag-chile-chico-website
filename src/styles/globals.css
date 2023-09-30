@@ -1,3 +1,39 @@
 @tailwind base;
+
+@layer base {
+  h1 {
+    @apply text-3xl md:text-6xl font-thin font-display ;
+  }
+  h2 {
+    @apply text-xl md:text-3xl font-display ;
+  }
+  h3 {
+    @apply text-lg font-display ;
+  }
+  h4 {
+    @apply text-base font-display ;
+  }
+  p {
+    @apply  font-display;
+  }
+
+  li {
+    @apply font-display;
+  }
+
+  ul {
+    @apply font-display;
+  }
+
+  ol {
+    @apply font-display;
+  }
+ 
+  input {
+    @apply font-display
+  }
+}
+
+
 @tailwind components;
 @tailwind utilities;

@@ -51,7 +51,8 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
  *
  * @see https://trpc.io/docs/context
  */
-export const createTRPCContext = async (opts: CreateNextContextOptions) => {
+export const createTRPCContext = async (opts?: CreateNextContextOptions) => {
+  if (!opts) return createInnerTRPCContext({ session: null });
   const { req, res } = opts;
 
   // Get the session from the server using the getServerSession wrapper function

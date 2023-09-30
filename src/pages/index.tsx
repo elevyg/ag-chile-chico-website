@@ -14,10 +14,12 @@ import Map from "~/components/Map";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
-    ...(await serverSideTranslations(locale, ["landing"], nextI18nConfig, [
-      "es",
-      "en",
-    ])),
+    ...(await serverSideTranslations(
+      locale,
+      ["landing", "common"],
+      nextI18nConfig,
+      ["es", "en"],
+    )),
   },
 });
 
@@ -53,7 +55,9 @@ export default function Home() {
           </h2>
           <Map address="O'higgins 420 Chile Chico" />
         </div>
-        <div className="h-screen bg-gradient-to-b from-pink-200 to-blue-500"></div>
+        <div className="flex h-screen flex-col bg-gradient-to-b from-pink-200 to-blue-500">
+          <h2 className="my-10 px-5 text-xl">Últimos artículos</h2>
+        </div>
       </RootLayout>
     </>
   );

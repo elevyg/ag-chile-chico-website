@@ -40,7 +40,7 @@
     "**/*.cjs",
     "**/*.mjs",
     ".next/types/**/*.ts"
-  ],
+, "src/console.ts"  ],
   "exclude": [
     "node_modules"
   ],

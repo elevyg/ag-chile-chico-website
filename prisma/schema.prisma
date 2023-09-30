@@ -49,6 +49,7 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    Article       Article[]
 }
 
 model VerificationToken {
@@ -57,4 +58,61 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model Article {
+    id          String      @id @default(cuid())
+    title       TextContent @relation("ArticleTitle", fields: [titleId], references: [id])
+    titleId     String
+    description String?
+    content     TextContent @relation("ArticleContent", fields: [contentId], references: [id])
+    contentId   String
+    slug        String      @unique
+    authorId    String?
+    author      User?       @relation(fields: [authorId], references: [id], onDelete: Cascade)
+    createdAt   DateTime    @default(now())
+    updatedAt   DateTime    @updatedAt
+
+    @@index([authorId])
+    @@index([contentId])
+    @@index([titleId])
+}
+
+model TextContent {
+    id              String        @id @default(uuid())
+    createdAt       DateTime      @default(now())
+    updatedAt       DateTime      @updatedAt
+    originalText    String        @db.LongText
+    originalLang    Language      @relation(fields: [languageId], references: [languageId])
+    languageId      String
+    Translation     Translation[]
+    ArticleTitles   Article[]     @relation("ArticleTitle")
+    ArticleContents Article[]     @relation("ArticleContent")
+
+    @@index([languageId])
+}
+
+model Translation {
+    id            String      @id @default(uuid())
+    createdAt     DateTime    @default(now())
+    updatedAt     DateTime    @updatedAt
+    textContent   TextContent @relation(fields: [textContentId], references: [id])
+    textContentId String
+    translation   String      @db.LongText
+    language      Language    @relation(fields: [languageId], references: [languageId])
+    languageId    String
+
+    @@index([textContentId])
+    @@index([languageId])
+}
+
+model Language {
+    languageId   String        @id @unique
+    languageName String
+    createdAt    DateTime      @default(now())
+    updatedAt    DateTime      @updatedAt
+    TextContent  TextContent[]
+    Translation  Translation[]
+
+    @@index([languageId])
 }
