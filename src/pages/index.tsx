@@ -9,6 +9,7 @@ import Map from "~/components/Map";
 import Hero from "~/pages/Hero";
 import Navbar from "~/components/Navbar";
 import { useTranslation } from "next-i18next";
+import MapSection from "~/pages/Map";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -36,12 +37,7 @@ export default function Home() {
       <RootLayout>
         <Navbar title={t("navbar-title")} inLanding />
         <Hero />
-        <div className=" flex flex-col bg-slate-100">
-          <h2 className="my-10 px-5 text-xl">
-            Encuentra los mejores alojamientos y actividades
-          </h2>
-          <Map address="O'higgins 420 Chile Chico" />
-        </div>
+        <MapSection />
         <div className="flex h-screen flex-col bg-gradient-to-b from-pink-200 to-blue-500">
           <h2 className="my-10 px-5 text-xl">Últimos artículos</h2>
         </div>

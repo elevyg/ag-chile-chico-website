@@ -44,7 +44,7 @@ function Map({ address }: { address: string }) {
     loadMap().catch((err) => console.error(err));
   }, [loadMap]);
 
-  return <div style={{ height: "50vh", width: "100vw" }} ref={mapRef} />;
+  return <div style={{ height: "100vh", width: "100vw" }} ref={mapRef} />;
 }
 export default Map;
 
