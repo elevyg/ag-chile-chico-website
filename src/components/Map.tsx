@@ -8,21 +8,16 @@ const loader = new Loader({
 
 // https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJrTLr-GyuEmsRBfy61i59si0
 
-function Map({ places }: { places: { placeId: string }[] }) {
+function Map({ places }: { places: { placeId: string; name: string }[] }) {
   const mapRef = useRef(null);
 
   const loadMap = useCallback(async () => {
     await loader.importLibrary("maps");
 
-    const loadPlaces = await loader.importLibrary("places");
+    await loader.importLibrary("places");
 
     const infowindow = new google.maps.InfoWindow();
 
-    const place = new loadPlaces.Place({
-      id: agMembers["brisas-del-lago"].placeId,
-    });
-
-    console.log(place.displayName);
     if (!mapRef.current) return;
 
     const map = new google.maps.Map(mapRef.current, {
@@ -49,6 +44,7 @@ function Map({ places }: { places: { placeId: string }[] }) {
               "geometry",
               "photo",
               "url",
+              "type",
             ],
           },
           (place, status) => {
@@ -78,7 +74,11 @@ function Map({ places }: { places: { placeId: string }[] }) {
 
                 const nameElement = document.createElement("h2");
 
-                nameElement.textContent = place.name!;
+                nameElement.textContent = place.types?.includes(
+                  "street_address",
+                )
+                  ? member.name
+                  : place.name!;
                 content.appendChild(nameElement);
 
                 const photoElement = document.createElement("img");
