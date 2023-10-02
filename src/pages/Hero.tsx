@@ -32,16 +32,19 @@ const Hero = () => {
             {t("main-title")}
           </motion.h1>
         </motion.div>
-        <CldImage
-          width="1000"
-          height="600"
-          priority
-          src="ag-chile-chico-website/foto_islas_vhlcy2"
-          sizes="100vw"
-          alt="Description of my image"
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        d
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 h-screen w-screen object-cover"
+          poster="https://res.cloudinary.com/dzyy8nvgd/image/upload/q_auto/v1695837655/ag-chile-chico-website/foto_islas_vhlcy2.jpg"
+        >
+          <source
+            src="https://res.cloudinary.com/dzyy8nvgd/video/upload/ac_none,q_auto/v1696270310/ag-chile-chico-website/Chile_Chico_Dron_series_res9ly.mp4"
+            type="video/mp4"
+          />
+        </video>
       </div>
     </div>
   );

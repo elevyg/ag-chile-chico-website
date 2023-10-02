@@ -18,14 +18,7 @@ const Navbar = ({ title, inLanding }: Props) => {
   const backgroundColor = useTransform(
     scrollYProgress,
     [0.5, 1],
-    ["rgba(241 245 249,0)", "rgba(241 245 249,1)"],
-    { ease: easeIn },
-  );
-
-  const color = useTransform(
-    scrollYProgress,
-    [0.5, 1],
-    ["rgba(256,256,256,1)", "rgba(39,39,42,1)"],
+    ["rgba(241 245 249,0.3)", "rgba(241 245 249,1)"],
     { ease: easeIn },
   );
 
@@ -33,17 +26,14 @@ const Navbar = ({ title, inLanding }: Props) => {
     <motion.nav
       className="fixed left-0 right-0 top-0 z-50 flex h-[80px] items-center justify-between  p-5 text-zinc-800"
       ref={target}
-      style={{ backgroundColor: backgroundColor, color }}
+      style={{ backgroundColor: backgroundColor }}
     >
       <div className="font-extrabold">
         <Link href="/">{title}</Link>
       </div>
-      <motion.div
-        className="mx-5 flex items-center justify-center gap-2 rounded-md  border-[1px] border-zinc-800 p-2 md:hidden"
-        style={{ borderColor: color }}
-      >
+      <div className="mx-5 flex items-center justify-center gap-2 rounded-md  border-[1px] border-zinc-800 p-2 md:hidden">
         <IoMenuOutline size="1.5em" />
-      </motion.div>
+      </div>
     </motion.nav>
   );
 };
