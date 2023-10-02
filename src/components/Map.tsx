@@ -48,6 +48,7 @@ function Map({ places }: { places: { placeId: string }[] }) {
               "place_id",
               "geometry",
               "photo",
+              "url",
             ],
           },
           (place, status) => {
@@ -62,6 +63,10 @@ function Map({ places }: { places: { placeId: string }[] }) {
               });
 
               google.maps.event.addListener(marker, "click", () => {
+                const link = document.createElement("a");
+                link.href = place.url!;
+                link.target = "_blank";
+
                 const content = document.createElement("div");
 
                 content.style.display = "flex";
@@ -92,7 +97,9 @@ function Map({ places }: { places: { placeId: string }[] }) {
                 placeAddressElement.textContent = place.formatted_address!;
                 content.appendChild(placeAddressElement);
 
-                infowindow.setContent(content);
+                link.appendChild(content);
+
+                infowindow.setContent(link);
                 infowindow.open(map, marker);
               });
             }
