@@ -1,7 +1,9 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { CldImage } from "next-cloudinary";
-import { useRef } from "react";
 import { useTranslation } from "next-i18next";
+import { useRef } from "react";
+
+import { isMobile } from "react-device-detect";
 
 const Hero = () => {
   const { t } = useTranslation(["landing", "common"]);
@@ -16,10 +18,14 @@ const Hero = () => {
   const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1, 0]);
 
   return (
-    <div ref={target} className="relative h-[200vh]">
+    <div ref={target} className={`relative h-screen md:h-[200vh] `}>
       <div className="sticky left-0 top-0 h-[100vh]">
         <motion.div
-          style={{ scale, opacity, x: "50%" }}
+          style={{
+            scale: !isMobile ? scale : undefined,
+            opacity: !isMobile ? opacity : undefined,
+            x: "50%",
+          }}
           className="absolute right-1/2 top-1/2 z-20 w-full overflow-hidden"
         >
           <motion.h1 className="w-full text-center text-3xl font-bold text-white">
@@ -35,6 +41,7 @@ const Hero = () => {
           alt="Description of my image"
           className="absolute inset-0 h-full w-full object-cover"
         />
+        d
       </div>
     </div>
   );
