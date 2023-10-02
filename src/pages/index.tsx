@@ -1,13 +1,14 @@
-import { CldImage } from "next-cloudinary";
 import Head from "next/head";
 
-import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import RootLayout from "~/pages/RootLayout";
 import nextI18nConfig from "../../next-i18next.config.mjs";
 
 import Map from "~/components/Map";
+import Hero from "~/pages/Hero";
+import Navbar from "~/components/Navbar";
+import { useTranslation } from "next-i18next";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -21,7 +22,7 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 });
 
 export default function Home() {
-  const { t } = useTranslation("landing");
+  const { t } = useTranslation();
   return (
     <>
       <Head>
@@ -33,19 +34,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <RootLayout>
-        <div className="relative flex h-screen flex-1 items-center justify-center ">
-          <h1 className="z-20 text-3xl font-bold text-white">
-            {t("main-title")}
-          </h1>
-          <CldImage
-            width="1000"
-            height="600"
-            src="ag-chile-chico-website/foto_islas_vhlcy2"
-            sizes="100vw"
-            alt="Description of my image"
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-        </div>
+        <Navbar title={t("navbar-title")} inLanding />
+        <Hero />
         <div className=" flex flex-col bg-slate-100">
           <h2 className="my-10 px-5 text-xl">
             Encuentra los mejores alojamientos y actividades

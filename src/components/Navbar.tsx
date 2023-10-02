@@ -5,25 +5,26 @@ import { IoMenuOutline } from "react-icons/io5";
 
 interface Props {
   title: string;
+  inLanding?: true;
 }
 
-const Navbar = ({ title }: Props) => {
+const Navbar = ({ title, inLanding }: Props) => {
   const target = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({
     target,
-    offset: ["80px", "160px"],
+    offset: ["80px", inLanding ? "100vh" : "160px"],
   });
 
   const backgroundColor = useTransform(
     scrollYProgress,
-    [0, 1],
+    [0.5, 1],
     ["rgba(241 245 249,0)", "rgba(241 245 249,1)"],
     { ease: easeIn },
   );
 
   const color = useTransform(
     scrollYProgress,
-    [0, 1],
+    [0.5, 1],
     ["rgba(256,256,256,1)", "rgba(39,39,42,1)"],
     { ease: easeIn },
   );
