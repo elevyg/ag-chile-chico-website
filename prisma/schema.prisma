@@ -67,17 +67,18 @@ model VerificationToken {
 }
 
 model Article {
-    id          String      @id @default(cuid())
-    title       TextContent @relation("ArticleTitle", fields: [titleId], references: [id])
-    titleId     String
-    description String?
-    content     TextContent @relation("ArticleContent", fields: [contentId], references: [id])
-    contentId   String
-    slug        String      @unique
-    authorId    String?
-    author      User?       @relation(fields: [authorId], references: [id], onDelete: Cascade)
-    createdAt   DateTime    @default(now())
-    updatedAt   DateTime    @updatedAt
+    id                 String      @id @default(cuid())
+    title              TextContent @relation("ArticleTitle", fields: [titleId], references: [id])
+    titleId            String
+    description        String?
+    content            TextContent @relation("ArticleContent", fields: [contentId], references: [id])
+    contentId          String
+    slug               String      @unique
+    authorId           String?
+    author             User?       @relation(fields: [authorId], references: [id], onDelete: Cascade)
+    createdAt          DateTime    @default(now())
+    updatedAt          DateTime    @updatedAt
+    coverPhotoPublicId String?
 
     @@index([authorId])
     @@index([contentId])

@@ -12,14 +12,21 @@ export const appRouter = createTRPCRouter({
   getArticle: publicProcedure
     .input(z.object({ slug: z.string(), locale: z.string() }))
     .query(async ({ ctx, input }) => {
-      const { content, id, slug, title, updatedAt, description } =
-        await ctx.prisma.article.findUniqueOrThrow({
-          where: { slug: input.slug },
-          include: {
-            title: true,
-            content: { include: { originalLang: true } },
-          },
-        });
+      const {
+        content,
+        id,
+        slug,
+        title,
+        updatedAt,
+        description,
+        coverPhotoPublicId,
+      } = await ctx.prisma.article.findUniqueOrThrow({
+        where: { slug: input.slug },
+        include: {
+          title: true,
+          content: { include: { originalLang: true } },
+        },
+      });
 
       if (content.originalLang.languageId !== input.locale) {
         const translatedContent = await ctx.prisma.translation.findFirstOrThrow(
@@ -45,6 +52,7 @@ export const appRouter = createTRPCRouter({
           slug,
           updatedAt,
           description,
+          coverPhotoPublicId,
         };
       }
 
@@ -55,6 +63,7 @@ export const appRouter = createTRPCRouter({
         slug,
         updatedAt,
         description,
+        coverPhotoPublicId,
       };
     }),
 });

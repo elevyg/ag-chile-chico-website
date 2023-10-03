@@ -3,7 +3,7 @@ import type { LexicalEditor } from "lexical";
 import { CldImage, CldUploadWidget } from "next-cloudinary";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ProtectedAdminLayout } from "~/components/ProtectedAdminLayout";
 import { api } from "~/utils/api";
 
@@ -12,7 +12,7 @@ const Editor = dynamic(() => import("~/components/TextEditor"), { ssr: false });
 const Editar = () => {
   const router = useRouter();
   const [locale, setLocale] = useState<"es" | "en">("es");
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [imagePublicId, setImagePublicId] = useState<string | null>(null);
 
   const article = api.getArticle.useQuery(
     {
@@ -21,6 +21,13 @@ const Editar = () => {
     },
     { enabled: !!router.query.articleSlug },
   );
+
+  useEffect(() => {
+    if (article.data) {
+      setImagePublicId(article.data.coverPhotoPublicId ?? null);
+    }
+  }, [article.data]);
+
   const [editor, setLexicalState] = useState<LexicalEditor | null>(null);
 
   const onSave = () => {
@@ -60,10 +67,8 @@ const Editar = () => {
               setLocale("en");
             }}
           >
-            Ingles
+            Inglés
           </button>
-        </div>
-        <div>
           <CldUploadWidget
             uploadPreset="article_cover_photo"
             onUpload={(res) => {
@@ -73,7 +78,7 @@ const Editar = () => {
                 typeof res.info.public_id === "string"
               ) {
                 console.log(res.info);
-                setImageUrl(res.info.public_id);
+                setImagePublicId(res.info.public_id);
               }
             }}
           >
@@ -87,14 +92,18 @@ const Editar = () => {
                   className="rounded-lg bg-slate-700 p-1 px-4 text-white"
                   onClick={handleOnClick}
                 >
-                  {imageUrl ? "Cambiar foto portada" : "Subir foto portada"}
+                  {imagePublicId
+                    ? "Cambiar foto portada"
+                    : "Subir foto portada"}
                 </button>
               );
             }}
           </CldUploadWidget>
-          {imageUrl && (
+        </div>
+        <div>
+          {imagePublicId && (
             <CldImage
-              src={imageUrl}
+              src={imagePublicId}
               height={400}
               width={700}
               alt="Cover image for article"
