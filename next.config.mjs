@@ -10,6 +10,7 @@ await import("./src/env.mjs");
 
 const config = {
   reactStrictMode: true,
+  transpilePackages: ["verbum"],
   /**
    * If you are using `appDir` then you must comment the below `i18n` config out.
    *
