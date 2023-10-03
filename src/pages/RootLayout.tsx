@@ -1,4 +1,5 @@
 import { Raleway } from "next/font/google";
+import Head from "next/head";
 
 const raleway = Raleway({
   variable: "--raleway-font",
@@ -12,8 +13,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="relative">
-      <div className={raleway.className}>{children}</div>
-    </main>
+    <>
+      <Head>
+        <title>AG Chile Chico</title>
+        <meta
+          name="description"
+          content="Descubre todo lo que necesitas para recorrer Chile Chico"
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <main className="relative">
+        <div className={raleway.className}>{children}</div>
+      </main>
+    </>
   );
 }

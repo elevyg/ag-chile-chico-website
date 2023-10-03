@@ -1,14 +1,14 @@
 import { easeIn, motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import { useRef } from "react";
+import { useTranslation } from "next-i18next";
 import { IoMenuOutline } from "react-icons/io5";
 
 interface Props {
-  title: string;
   inLanding?: true;
 }
 
-const Navbar = ({ title, inLanding }: Props) => {
+const Navbar = ({ inLanding }: Props) => {
   const target = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({
     target,
@@ -22,6 +22,8 @@ const Navbar = ({ title, inLanding }: Props) => {
     { ease: easeIn },
   );
 
+  const { t } = useTranslation("common");
+
   return (
     <motion.nav
       className="fixed left-0 right-0 top-0 z-50 flex h-[80px] items-center justify-between  p-5 text-zinc-800"
@@ -29,7 +31,7 @@ const Navbar = ({ title, inLanding }: Props) => {
       style={{ backgroundColor: backgroundColor }}
     >
       <div className="font-extrabold">
-        <Link href="/">{title}</Link>
+        <Link href="/">{t("navbar-title")}</Link>
       </div>
       <div className="mx-5 flex items-center justify-center gap-2 rounded-md  border-[1px] border-zinc-800 p-2 md:hidden">
         <IoMenuOutline size="1.5em" />

@@ -23,19 +23,10 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 });
 
 export default function Home() {
-  const { t } = useTranslation();
   return (
     <>
-      <Head>
-        <title>AG Chile Chico</title>
-        <meta
-          name="description"
-          content="Descubre todo lo que necesitas para recorrer Chile Chico"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       <RootLayout>
-        <Navbar title={t("navbar-title")} inLanding />
+        <Navbar inLanding />
         <Hero />
         <MapSection />
         <div className="flex h-screen flex-col bg-gradient-to-b from-pink-200 to-blue-500">
