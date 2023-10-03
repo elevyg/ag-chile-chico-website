@@ -1,16 +1,18 @@
+import { $generateHtmlFromNodes } from "@lexical/html";
+import type { LexicalEditor } from "lexical";
+import { CldImage, CldUploadWidget } from "next-cloudinary";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { api } from "~/utils/api";
-import type { LexicalEditor } from "lexical";
-import { $generateHtmlFromNodes } from "@lexical/html";
 import { ProtectedAdminLayout } from "~/components/ProtectedAdminLayout";
+import { api } from "~/utils/api";
 
 const Editor = dynamic(() => import("~/components/TextEditor"), { ssr: false });
 
 const Editar = () => {
   const router = useRouter();
   const [locale, setLocale] = useState<"es" | "en">("es");
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   const article = api.getArticle.useQuery(
     {
@@ -60,6 +62,44 @@ const Editar = () => {
           >
             Ingles
           </button>
+        </div>
+        <div>
+          <CldUploadWidget
+            uploadPreset="article_cover_photo"
+            onUpload={(res) => {
+              if (
+                typeof res.info === "object" &&
+                "public_id" in res.info &&
+                typeof res.info.public_id === "string"
+              ) {
+                console.log(res.info);
+                setImageUrl(res.info.public_id);
+              }
+            }}
+          >
+            {({ open }) => {
+              function handleOnClick(e: React.MouseEvent<HTMLButtonElement>) {
+                e.preventDefault();
+                open();
+              }
+              return (
+                <button
+                  className="rounded-lg bg-slate-700 p-1 px-4 text-white"
+                  onClick={handleOnClick}
+                >
+                  {imageUrl ? "Cambiar foto portada" : "Subir foto portada"}
+                </button>
+              );
+            }}
+          </CldUploadWidget>
+          {imageUrl && (
+            <CldImage
+              src={imageUrl}
+              height={400}
+              width={700}
+              alt="Cover image for article"
+            />
+          )}
         </div>
         {article.isLoading || article.isFetching ? (
           "Loading..."
