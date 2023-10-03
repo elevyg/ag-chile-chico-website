@@ -18,12 +18,12 @@ model Account {
     type              String
     provider          String
     providerAccountId String
-    refresh_token     String? // @db.Text
-    access_token      String? // @db.Text
+    refresh_token     String? @db.LongText
+    access_token      String? @db.LongText
     expires_at        Int?
     token_type        String?
     scope             String?
-    id_token          String? // @db.Text
+    id_token          String? @db.LongText
     session_state     String?
     user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -47,9 +47,15 @@ model User {
     email         String?   @unique
     emailVerified DateTime?
     image         String?
+    UserRole      UserRole  @default(USER)
     accounts      Account[]
     sessions      Session[]
     Article       Article[]
+}
+
+enum UserRole {
+    ADMIN
+    USER
 }
 
 model VerificationToken {

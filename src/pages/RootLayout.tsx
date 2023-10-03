@@ -1,5 +1,7 @@
+import { signIn, signOut, useSession } from "next-auth/react";
 import { Raleway } from "next/font/google";
 import Head from "next/head";
+import { api } from "~/utils/api";
 
 const raleway = Raleway({
   variable: "--raleway-font",
@@ -12,6 +14,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const { data: sessionData } = useSession();
+
   return (
     <>
       <Head>
@@ -25,6 +29,14 @@ export default function RootLayout({
       <main className="relative">
         <div className={raleway.className}>{children}</div>
       </main>
+      <footer className="min-h-[100px] bg-black">
+        <button
+          className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
+          onClick={sessionData ? () => void signOut() : () => void signIn()}
+        >
+          {sessionData ? "Cerrar sesión" : "Iniciar sesión"}
+        </button>
+      </footer>
     </>
   );
 }
