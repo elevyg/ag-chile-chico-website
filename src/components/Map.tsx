@@ -22,7 +22,7 @@ function Map({ places }: { places: { placeId: string; name: string }[] }) {
 
     const map = new google.maps.Map(mapRef.current, {
       center: { lat: -46.5411, lng: -71.7278 },
-      zoom: 14,
+      zoom: 15,
       fullscreenControl: false, // remove the top-right button
       mapTypeControl: false, // remove the top-left buttons
       streetViewControl: false, // remove the pegman
