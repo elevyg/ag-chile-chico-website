@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { ProtectedAdminLayout } from "~/components/ProtectedAdminLayout";
+import AdminLayout from "~/pages/AdminLayout";
 import ArticleEditor from "~/pages/admin/components/ArticleEditor";
 
 const Editar = () => {
@@ -21,9 +21,9 @@ const Editar = () => {
 
   if (typeof articleSlug !== "string") return null;
   return (
-    <ProtectedAdminLayout>
+    <AdminLayout>
       <ArticleEditor articleSlug={articleSlug} />
-    </ProtectedAdminLayout>
+    </AdminLayout>
   );
 };
 

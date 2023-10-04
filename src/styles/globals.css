@@ -2,19 +2,19 @@
 
 @layer base {
   h1 {
-    @apply text-3xl md:text-6xl font-thin font-display ;
+    @apply font-thin font-display ;
   }
   h2 {
-    @apply text-xl md:text-3xl font-display ;
+    @apply font-display ;
   }
   h3 {
-    @apply text-lg font-display ;
+    @apply font-display ;
   }
   h4 {
-    @apply text-base font-display ;
+    @apply font-display ;
   }
   p {
-    @apply  font-display;
+    @apply font-display;
   }
 
   li {
