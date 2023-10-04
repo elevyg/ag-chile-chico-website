@@ -2,9 +2,15 @@ import { z } from "zod";
 import { publicProcedure } from "~/server/api/trpc";
 
 export const getAll = publicProcedure
-  .input(z.object({ locale: z.string().optional() }))
-  .query(async ({ ctx, input: { locale = "es" } }) => {
+  .input(
+    z.object({
+      locale: z.string().optional(),
+      showDeleted: z.boolean().optional(),
+    }),
+  )
+  .query(async ({ ctx, input: { locale = "es", showDeleted } }) => {
     const articles = await ctx.prisma.article.findMany({
+      where: { isDeleted: showDeleted },
       include: {
         title: {
           select: {

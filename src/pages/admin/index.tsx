@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import AdminLayout from "~/pages/AdminLayout";
-import { api } from "~/utils/api";
-import { translationServerProps } from "~/utils/translationServerProps";
 import {
   IoAddCircleSharp,
   IoArrowForwardCircleSharp,
-  IoMenuOutline,
+  IoCloseCircleSharp,
   IoPencilSharp,
 } from "react-icons/io5";
+import AdminLayout from "~/pages/AdminLayout";
+import { api } from "~/utils/api";
+import { translationServerProps } from "~/utils/translationServerProps";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
@@ -19,6 +19,8 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => ({
 const Admin = () => {
   const { locale } = useRouter();
   const allArticles = api.article.getAll.useQuery({ locale });
+  const softDelete = api.article.softDelete.useMutation();
+
   return (
     <AdminLayout>
       <div className="">
@@ -37,7 +39,11 @@ const Admin = () => {
             return (
               <div
                 key={article.id}
-                className="flex items-center justify-between rounded-lg bg-slate-100 p-10 hover:bg-slate-200"
+                className={`flex items-center justify-between rounded-lg p-10 ${
+                  article.isDeleted
+                    ? "bg-red-100 hover:bg-red-200"
+                    : "bg-slate-100  hover:bg-slate-200"
+                }`}
               >
                 <h2 className="text-lg font-medium text-slate-800">
                   {article.title}
@@ -57,6 +63,18 @@ const Admin = () => {
                     <p>Ver</p>
                     <IoArrowForwardCircleSharp />
                   </Link>
+                  <button
+                    onClick={() =>
+                      softDelete.mutate({
+                        id: article.id,
+                        restore: article.isDeleted ? true : false,
+                      })
+                    }
+                    className="flex items-center justify-center gap-2 hover:font-bold"
+                  >
+                    <p>{article.isDeleted ? "Restaurar" : "Eliminar"}</p>
+                    <IoCloseCircleSharp />
+                  </button>
                 </div>
               </div>
             );

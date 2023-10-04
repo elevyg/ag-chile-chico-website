@@ -79,6 +79,7 @@ model Article {
     createdAt          DateTime    @default(now())
     updatedAt          DateTime    @updatedAt
     coverPhotoPublicId String?     @db.LongText
+    isDeleted          Boolean     @default(false)
 
     @@index([authorId])
     @@index([contentId])

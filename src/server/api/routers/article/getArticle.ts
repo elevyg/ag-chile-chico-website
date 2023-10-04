@@ -13,7 +13,7 @@ export const getArticle = publicProcedure
       description,
       coverPhotoPublicId,
     } = await ctx.prisma.article.findUniqueOrThrow({
-      where: { slug: input.slug },
+      where: { slug: input.slug, isDeleted: false },
       include: {
         title: {
           include: {

@@ -12,7 +12,7 @@ const NewArticle = () => {
   return (
     <AdminLayout>
       <div className="flex flex-1 flex-col">
-        <h1>Crea un artículo nuevo</h1>
+        <h1 className="text-2xl">Crea un artículo nuevo</h1>
         <ArticleEditor />
       </div>
     </AdminLayout>
