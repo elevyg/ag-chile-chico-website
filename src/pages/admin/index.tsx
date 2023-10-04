@@ -39,7 +39,7 @@ const Admin = () => {
             return (
               <div
                 key={article.id}
-                className={`flex items-center justify-between rounded-lg p-10 ${
+                className={`flex flex-col justify-between gap-5 rounded-lg p-10 md:flex-row md:items-center ${
                   article.isDeleted
                     ? "bg-red-100 hover:bg-red-200"
                     : "bg-slate-100  hover:bg-slate-200"
