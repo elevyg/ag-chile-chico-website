@@ -30,7 +30,7 @@ export default function AdminLayout({
       <ProtectedAdminLayout>
         <>
           <Navbar />
-          <main className="relative">
+          <main className="relative min-h-[calc(100vh_-_160px)] p-5">
             <div className={raleway.className}>{children}</div>
           </main>
           <footer className="min-h-[100px] bg-black">

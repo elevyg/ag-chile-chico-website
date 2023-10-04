@@ -106,7 +106,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 const Article = ({ slug }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const { locale } = useRouter();
-  const article = api.getArticle.useQuery({ slug, locale: locale ?? "es" });
+  const article = api.article.get.useQuery({ slug, locale: locale ?? "es" });
   const content = convertStringToHTML(article.data?.content);
 
   if (!content) return;
