@@ -47,7 +47,7 @@ model User {
     email         String?   @unique
     emailVerified DateTime?
     image         String?
-    UserRole      UserRole  @default(USER)
+    role          UserRole  @default(USER)
     accounts      Account[]
     sessions      Session[]
     Article       Article[]
@@ -78,7 +78,7 @@ model Article {
     author             User?       @relation(fields: [authorId], references: [id], onDelete: Cascade)
     createdAt          DateTime    @default(now())
     updatedAt          DateTime    @updatedAt
-    coverPhotoPublicId String?
+    coverPhotoPublicId String?     @db.LongText
 
     @@index([authorId])
     @@index([contentId])
@@ -89,14 +89,9 @@ model TextContent {
     id              String        @id @default(uuid())
     createdAt       DateTime      @default(now())
     updatedAt       DateTime      @updatedAt
-    originalText    String        @db.LongText
-    originalLang    Language      @relation(fields: [languageId], references: [languageId])
-    languageId      String
     Translation     Translation[]
     ArticleTitles   Article[]     @relation("ArticleTitle")
     ArticleContents Article[]     @relation("ArticleContent")
-
-    @@index([languageId])
 }
 
 model Translation {
@@ -105,10 +100,11 @@ model Translation {
     updatedAt     DateTime    @updatedAt
     textContent   TextContent @relation(fields: [textContentId], references: [id])
     textContentId String
-    translation   String      @db.LongText
-    language      Language    @relation(fields: [languageId], references: [languageId])
+    content       String      @db.LongText
+    Language      Language    @relation(fields: [languageId], references: [languageId])
     languageId    String
 
+    @@unique([textContentId, languageId], name: "uniqueLanguageTranslation")
     @@index([textContentId])
     @@index([languageId])
 }
@@ -118,7 +114,6 @@ model Language {
     languageName String
     createdAt    DateTime      @default(now())
     updatedAt    DateTime      @updatedAt
-    TextContent  TextContent[]
     Translation  Translation[]
 
     @@index([languageId])

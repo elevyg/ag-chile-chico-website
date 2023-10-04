@@ -6,7 +6,7 @@ type Props = {
   children: React.ReactElement;
 };
 
-export const ProtectedAdminLayout = ({ children }: Props): JSX.Element => {
+export const ProtectedAdminLayout = ({ children }: Props) => {
   const router = useRouter();
   const { status: sessionStatus, data } = useSession();
   const authorized = sessionStatus === "authenticated";
@@ -18,8 +18,7 @@ export const ProtectedAdminLayout = ({ children }: Props): JSX.Element => {
   useEffect(() => {
     if (loading || !router.isReady) return;
 
-    if (unAuthorized && !isAdmin) {
-      console.log("not authorized");
+    if (unAuthorized || !isAdmin) {
       void router.push({
         pathname: "/",
         query: { returnUrl: router.asPath },
@@ -28,8 +27,8 @@ export const ProtectedAdminLayout = ({ children }: Props): JSX.Element => {
   }, [loading, unAuthorized, sessionStatus, router, isAdmin]);
 
   if (loading) {
-    return <>Loading app...</>;
+    return null;
   }
 
-  return authorized ? <div>{children}</div> : <></>;
+  return authorized && isAdmin ? <div>{children}</div> : <></>;
 };

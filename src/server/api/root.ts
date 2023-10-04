@@ -1,12 +1,11 @@
 import { z } from "zod";
 import { exampleRouter } from "~/server/api/routers/example";
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedAdminProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 
-/**
- * This is the primary router for your server.
- *
- * All routers added in /api/routers should be manually added here.
- */
 export const appRouter = createTRPCRouter({
   example: exampleRouter,
   getArticle: publicProcedure
@@ -23,48 +22,131 @@ export const appRouter = createTRPCRouter({
       } = await ctx.prisma.article.findUniqueOrThrow({
         where: { slug: input.slug },
         include: {
-          title: true,
-          content: { include: { originalLang: true } },
+          title: {
+            include: {
+              Translation: { where: { languageId: input.locale } },
+            },
+          },
+          content: {
+            include: {
+              Translation: { where: { languageId: input.locale } },
+            },
+          },
         },
       });
 
-      if (content.originalLang.languageId !== input.locale) {
-        const translatedContent = await ctx.prisma.translation.findFirstOrThrow(
-          {
-            where: {
-              textContent: { id: content.id },
-              languageId: input.locale,
-            },
-          },
-        );
+      const contentForLocale = content.Translation.at(0)?.content;
+      const titleForLocale = title.Translation.at(0)?.content;
 
-        const translatedTitle = await ctx.prisma.translation.findFirstOrThrow({
-          where: {
-            textContent: { id: title.id },
-            languageId: input.locale,
-          },
-        });
-
-        return {
-          title: translatedTitle.translation,
-          content: translatedContent.translation,
-          id,
-          slug,
-          updatedAt,
-          description,
-          coverPhotoPublicId,
-        };
+      if (!contentForLocale || !titleForLocale) {
+        return null;
       }
 
       return {
-        title: title.originalText,
-        content: content.originalText,
+        title: titleForLocale,
+        content: contentForLocale,
         id,
         slug,
         updatedAt,
         description,
         coverPhotoPublicId,
       };
+    }),
+  upsertArticle: protectedAdminProcedure
+    .input(
+      z.object({
+        slug: z.string(),
+        locale: z.string(),
+        content: z.string(),
+        coverPhotoPublicId: z.string().optional(),
+        title: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const article = await ctx.prisma.article.findUnique({
+        where: { slug: input.slug },
+        include: {
+          content: {
+            select: {
+              id: true,
+            },
+          },
+          title: { select: { id: true } },
+        },
+      });
+
+      if (article) {
+        const updateArticle = ctx.prisma.article.update({
+          where: { slug: input.slug },
+          data: {
+            coverPhotoPublicId: input.coverPhotoPublicId,
+          },
+        });
+
+        const updateContent = ctx.prisma.translation.upsert({
+          where: {
+            uniqueLanguageTranslation: {
+              textContentId: article.content.id,
+              languageId: input.locale,
+            },
+          },
+          update: { content: input.content },
+          create: {
+            content: input.content,
+            languageId: input.locale,
+            textContentId: article.content.id,
+          },
+        });
+
+        const updateTitle = ctx.prisma.translation.upsert({
+          where: {
+            uniqueLanguageTranslation: {
+              textContentId: article.title.id,
+              languageId: input.locale,
+            },
+          },
+          update: { content: input.title },
+          create: {
+            content: input.title,
+            languageId: input.locale,
+            textContentId: article.title.id,
+          },
+        });
+
+        return ctx.prisma.$transaction([
+          updateArticle,
+          updateContent,
+          updateTitle,
+        ]);
+      }
+
+      return ctx.prisma.article.create({
+        data: {
+          slug: input.slug,
+          // description: input.content ?? null,
+          coverPhotoPublicId: input.coverPhotoPublicId,
+          title: {
+            create: {
+              Translation: {
+                create: {
+                  content: input.title,
+                  languageId: input.locale,
+                },
+              },
+            },
+          },
+          content: {
+            create: {
+              Translation: {
+                create: {
+                  content: input.content,
+                  languageId: input.locale,
+                },
+              },
+            },
+          },
+        },
+      });
     }),
 });
 
