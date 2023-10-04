@@ -15,6 +15,8 @@ import SuperJSON from "superjson";
 import { prisma } from "~/server/db";
 import { api } from "~/utils/api";
 import { useRouter } from "next/router";
+import { CldImage } from "next-cloudinary";
+import Navbar from "~/components/Navbar";
 
 const classMap = new Map(
   Object.entries({
@@ -30,8 +32,7 @@ function addTailwindClasses(node: HTMLElement) {
     const tailwindClass = classMap.get(tagName);
 
     if (tailwindClass) {
-      const existingClass = node.getAttribute("class") ?? "";
-      node.setAttribute(`class`, classNames(existingClass, tailwindClass));
+      node.setAttribute(`class`, classNames(tailwindClass));
     }
 
     for (const childNode of node.childNodes) {
@@ -113,10 +114,28 @@ const Article = ({ slug }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
   return (
     <RootLayout>
-      <article>
-        <div>{/* Cover photo */}</div>
-        <div className="max-w-5xl px-5">
-          <div dangerouslySetInnerHTML={{ __html: content }} />
+      <Navbar />
+      <article className="my-5 flex flex-col items-center gap-5">
+        <div className="flex w-full flex-col sm:w-3/4 lg:w-3/5">
+          <h1 className="px-5 text-2xl md:text-4xl">{article.data?.title}</h1>
+          <p className="px-5">
+            Ultima actualización: {article.data?.updatedAt.toLocaleDateString()}
+          </p>
+
+          {article.data?.coverPhotoPublicId && (
+            <CldImage
+              width={700}
+              height={100}
+              priority
+              src={article.data?.coverPhotoPublicId}
+              alt="Cover image for article"
+              sizes="100vw"
+              className="mt-5 w-full"
+            />
+          )}
+        </div>
+        <div className="max-w-3xl px-5">
+          <div dangerouslySetInnerHTML={{ __html: content }} />d
         </div>
       </article>
     </RootLayout>

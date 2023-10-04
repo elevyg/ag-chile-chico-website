@@ -2,7 +2,7 @@
 
 @layer base {
   h1 {
-    @apply font-thin font-display ;
+    @apply font-display ;
   }
   h2 {
     @apply font-display ;

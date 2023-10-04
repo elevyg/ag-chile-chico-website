@@ -3,7 +3,13 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import AdminLayout from "~/pages/AdminLayout";
 import ArticleEditor from "~/pages/admin/components/ArticleEditor";
+import { translationServerProps } from "~/utils/translationServerProps";
 
+export const getServerSideProps = async ({ locale }: { locale: string }) => ({
+  props: {
+    ...(await translationServerProps(locale)),
+  },
+});
 const Editar = () => {
   const router = useRouter();
 
