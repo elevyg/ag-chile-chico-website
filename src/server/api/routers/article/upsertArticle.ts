@@ -9,6 +9,7 @@ export const upsertArticle = protectedAdminProcedure
       content: z.string(),
       coverPhotoPublicId: z.string().optional(),
       title: z.string(),
+      description: z.string().max(500).optional(),
     }),
   )
   .mutation(async ({ ctx, input }) => {
@@ -21,6 +22,7 @@ export const upsertArticle = protectedAdminProcedure
           },
         },
         title: { select: { id: true } },
+        description: { select: { id: true } },
       },
     });
 
@@ -62,17 +64,56 @@ export const upsertArticle = protectedAdminProcedure
         },
       });
 
-      return ctx.prisma.$transaction([
-        updateArticle,
-        updateContent,
-        updateTitle,
-      ]);
+      const updates = [updateArticle, updateContent, updateTitle];
+
+      if (input.description) {
+        if (article.description?.id) {
+          const updateDescription = ctx.prisma.translation.create({
+            data: {
+              content: input.description,
+              languageId: input.locale,
+              textContentId: article.description.id,
+            },
+          });
+          updates.push(updateDescription);
+        } else {
+          const createDescription = ctx.prisma.article.update({
+            where: { slug: input.slug },
+            data: {
+              description: {
+                create: {
+                  Translation: {
+                    create: {
+                      content: input.description,
+                      languageId: input.locale,
+                    },
+                  },
+                },
+              },
+            },
+          });
+          updates.push(createDescription);
+        }
+      }
+
+      return ctx.prisma.$transaction(updates);
     }
 
     return ctx.prisma.article.create({
       data: {
         slug: input.slug,
-        // description: input.content ?? null,
+        ...(input.description && {
+          description: {
+            create: {
+              Translation: {
+                create: {
+                  content: input.description,
+                  languageId: input.locale,
+                },
+              },
+            },
+          },
+        }),
         coverPhotoPublicId: input.coverPhotoPublicId,
         title: {
           create: {

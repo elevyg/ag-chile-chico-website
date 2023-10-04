@@ -25,11 +25,17 @@ export const getArticle = publicProcedure
             Translation: { where: { languageId: input.locale } },
           },
         },
+        description: {
+          include: {
+            Translation: { where: { languageId: input.locale } },
+          },
+        },
       },
     });
 
     const contentForLocale = content.Translation.at(0)?.content;
     const titleForLocale = title.Translation.at(0)?.content;
+    const descriptionForLocale = description?.Translation.at(0)?.content;
 
     if (!contentForLocale || !titleForLocale) {
       return null;
@@ -38,10 +44,10 @@ export const getArticle = publicProcedure
     return {
       title: titleForLocale,
       content: contentForLocale,
+      description: descriptionForLocale,
       id,
       slug,
       updatedAt,
-      description,
       coverPhotoPublicId,
     };
   });

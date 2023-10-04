@@ -28,15 +28,21 @@ const ArticleEditor = ({ articleSlug }: { articleSlug?: string }) => {
 
   const [editor, setLexicalState] = useState<LexicalEditor | null>(null);
 
-  const { handleSubmit, control } = useForm<{ slug: string; title: string }>({
+  const { handleSubmit, control } = useForm<{
+    slug: string;
+    title: string;
+    description?: string;
+  }>({
     defaultValues: {
       title: article?.data?.title ?? "",
       slug: article?.data?.slug ?? "",
+      description: article?.data?.description ?? "",
     },
   });
 
   const title = useController({ name: "title", control });
   const slug = useController({ name: "slug", control });
+  const description = useController({ name: "description", control });
 
   useEffect(() => {
     if (article.data) {
@@ -49,7 +55,11 @@ const ArticleEditor = ({ articleSlug }: { articleSlug?: string }) => {
 
   const updateOrCrateArticle = api.article.upsert.useMutation();
 
-  const onSubmit: SubmitHandler<{ slug: string; title: string }> = (data) => {
+  const onSubmit: SubmitHandler<{
+    slug: string;
+    title: string;
+    description?: string;
+  }> = (data) => {
     if (editor) {
       editor.update(() => {
         const htmlString = $generateHtmlFromNodes(editor);
@@ -61,6 +71,7 @@ const ArticleEditor = ({ articleSlug }: { articleSlug?: string }) => {
           content: htmlString,
           locale,
           coverPhotoPublicId: imagePublicId ?? undefined,
+          description: data.description,
         });
       });
     }
@@ -127,14 +138,20 @@ const ArticleEditor = ({ articleSlug }: { articleSlug?: string }) => {
             }}
           </CldUploadWidget>
         </div>
-        <div>
-          <Label htmlFor="slug">Título:</Label>
-          <Input {...title.field} />
+        <div className="mt-5 flex flex-col gap-5">
+          <div>
+            <Label htmlFor="title">Título:</Label>
+            <Input {...title.field} />
+          </div>
+          <div>
+            <Label htmlFor="description">Descripción:</Label>
+            <TextArea className="h-40" {...description.field} />
+          </div>
           {!articleSlug && (
-            <>
+            <div>
               <Label htmlFor="slug">Slug:</Label>
               <Input {...slug.field} />
-            </>
+            </div>
           )}
         </div>
         <div>
@@ -144,6 +161,7 @@ const ArticleEditor = ({ articleSlug }: { articleSlug?: string }) => {
               height={400}
               width={700}
               alt="Cover image for article"
+              className="my-5"
             />
           )}
         </div>
@@ -169,7 +187,20 @@ const ArticleEditor = ({ articleSlug }: { articleSlug?: string }) => {
 const Input = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
   <input
     {...props}
-    className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+    className={
+      "block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 " +
+      props.className
+    }
+  />
+);
+
+const TextArea = (props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) => (
+  <textarea
+    {...props}
+    className={
+      "block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 " +
+      props.className
+    }
   />
 );
 
