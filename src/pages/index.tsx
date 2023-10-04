@@ -1,14 +1,10 @@
-import Head from "next/head";
-
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import RootLayout from "~/pages/RootLayout";
 import nextI18nConfig from "../../next-i18next.config.mjs";
 
-import Map from "~/components/Map";
+import LandingNavbar from "~/components/LandingNavbar";
 import Hero from "~/pages/Hero";
-import Navbar from "~/components/Navbar";
-import { useTranslation } from "next-i18next";
 import MapSection from "~/pages/Map";
 
 export const getServerSideProps = async ({ locale }: { locale: string }) => ({
@@ -26,7 +22,7 @@ export default function Home() {
   return (
     <>
       <RootLayout>
-        <Navbar inLanding />
+        <LandingNavbar />
         <Hero />
         <MapSection />
         <div className="flex h-screen flex-col bg-gradient-to-b from-pink-200 to-blue-500">
