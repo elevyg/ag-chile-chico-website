@@ -60,7 +60,7 @@ export async function getStaticProps(
 
     if (!slug) return;
 
-    const article = await ssg.getArticle.fetch({
+    const article = await ssg.article.get.fetch({
       slug,
       locale: context.locale ?? "en",
     });

@@ -14,7 +14,7 @@ const ArticleEditor = ({ articleSlug }: { articleSlug?: string }) => {
   const [locale, setLocale] = useState<"es" | "en">("es");
   const [imagePublicId, setImagePublicId] = useState<string | null>(null);
 
-  const article = api.getArticle.useQuery(
+  const article = api.article.get.useQuery(
     {
       slug: articleSlug ?? "",
       locale,
@@ -47,7 +47,7 @@ const ArticleEditor = ({ articleSlug }: { articleSlug?: string }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [article.data]);
 
-  const updateOrCrateArticle = api.upsertArticle.useMutation();
+  const updateOrCrateArticle = api.article.upsert.useMutation();
 
   const onSubmit: SubmitHandler<{ slug: string; title: string }> = (data) => {
     if (editor) {
