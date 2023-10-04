@@ -102,6 +102,7 @@ model Translation {
     textContent   TextContent @relation(fields: [textContentId], references: [id])
     textContentId String
     content       String      @db.LongText
+    translation   String?     @db.LongText
     Language      Language    @relation(fields: [languageId], references: [languageId])
     languageId    String
 
