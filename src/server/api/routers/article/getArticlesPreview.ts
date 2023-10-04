@@ -7,6 +7,7 @@ export const getArticlesPreview = publicProcedure
     const articles = await ctx.prisma.article.findMany({
       where: { isDeleted: false },
       select: {
+        id: true,
         coverPhotoPublicId: true,
         slug: true,
         title: {
