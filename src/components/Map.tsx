@@ -1,6 +1,5 @@
 import { Loader } from "@googlemaps/js-api-loader";
 import { useCallback, useEffect, useRef } from "react";
-import { agMembers } from "~/ag-members";
 
 const loader = new Loader({
   apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
