@@ -3,9 +3,10 @@ import { CldImage } from "next-cloudinary";
 import { useTranslation } from "next-i18next";
 import { useRef } from "react";
 
-import { isMobile } from "react-device-detect";
-
-const Hero = () => {
+interface Props {
+  isMobile: boolean;
+}
+const Hero = ({ isMobile }: Props) => {
   const { t } = useTranslation(["landing", "common"]);
   const target = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({
