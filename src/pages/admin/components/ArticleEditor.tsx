@@ -3,9 +3,11 @@ import { $generateHtmlFromNodes } from "@lexical/html";
 import type { LexicalEditor } from "lexical";
 import { CldImage, CldUploadWidget } from "next-cloudinary";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useController, useForm, type SubmitHandler } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
+import { IoArrowBackOutline } from "react-icons/io5";
 import { ProtectedAdminLayout } from "~/components/ProtectedAdminLayout";
 import { env } from "~/env.mjs";
 import { api } from "~/utils/api";
@@ -102,12 +104,23 @@ const ArticleEditor = ({
     }
   };
 
+  const router = useRouter();
+
   return (
     <ProtectedAdminLayout>
       <>
         <Toaster />
         <div className="p-5">
           <div className="flex gap-4">
+            <button
+              className="flex items-center justify-center gap-2 hover:font-bold"
+              onClick={() => {
+                void router.push("/admin");
+              }}
+            >
+              <IoArrowBackOutline />
+              Volver
+            </button>
             <button
               disabled={updateOrCrateArticle.isLoading}
               className="rounded-lg bg-blue-600 p-1 px-4 text-white hover:bg-blue-950"
