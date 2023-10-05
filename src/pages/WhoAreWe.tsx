@@ -2,6 +2,7 @@ import { useScroll, motion, useTransform } from "framer-motion";
 import Image from "next/image";
 import React, { useRef } from "react";
 import { useTranslation } from "next-i18next";
+import { useRouter } from "next/router";
 
 interface Props {
   isMobile: boolean;
@@ -30,6 +31,8 @@ const WhoAreWe = ({ isMobile }: Props) => {
 
   const { t } = useTranslation(["landing", "common"]);
 
+  const router = useRouter();
+
   return (
     <motion.div
       ref={target}
@@ -54,7 +57,10 @@ const WhoAreWe = ({ isMobile }: Props) => {
       >
         <h3 className="text-2xl font-bold">{t("who-are-we-title")}</h3>
         <p>{t("about-ag-description")}</p>
-        <button className="mt-5 w-full max-w-4xl self-center rounded-md border-2 border-darkYellow p-5 text-lg font-bold text-darkYellow hover:bg-darkYellow hover:text-white">
+        <button
+          onClick={() => void router.push("/unete")}
+          className="mt-5 w-full max-w-4xl self-center rounded-md border-2 border-darkYellow p-5 text-lg font-bold text-darkYellow hover:bg-darkYellow hover:text-white"
+        >
           {t("ag-call-to-action")}
         </button>
       </motion.div>
