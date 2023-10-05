@@ -3,7 +3,10 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import RootLayout from "~/pages/RootLayout";
 import nextI18nConfig from "../../next-i18next.config.mjs";
 
-import { type GetServerSidePropsContext, type InferGetServerSidePropsType } from "next";
+import {
+  type GetServerSidePropsContext,
+  type InferGetServerSidePropsType,
+} from "next";
 import { getSelectorsByUserAgent } from "react-device-detect";
 import LandingNavbar from "~/components/LandingNavbar";
 import ArticlesPreview from "~/pages/ArticlesPreview";
@@ -47,7 +50,7 @@ export default function Home(
       <RootLayout>
         <LandingNavbar />
         <Hero isMobile={props.isMobile} />
-        <ArticlesPreview />
+        <ArticlesPreview isMobile={props.isMobile} />
         <MapSection />
         <WhoAreWe isMobile={props.isMobile} />
       </RootLayout>

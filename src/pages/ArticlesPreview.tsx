@@ -2,7 +2,13 @@ import { motion } from "framer-motion";
 import { CldImage } from "next-cloudinary";
 import { useRouter } from "next/router";
 import { api } from "~/utils/api";
-const ArticlesPreview = () => {
+import { isMobile } from "react-device-detect";
+
+interface Props {
+  isMobile: boolean;
+}
+
+const ArticlesPreview = ({ isMobile }: Props) => {
   const { locale } = useRouter();
   const articlesPreview = api.article.getPreviews.useQuery({
     locale: locale ?? "es",
@@ -19,7 +25,7 @@ const ArticlesPreview = () => {
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            transition={{ delay: index * 0.5, duration: 0.5 }}
+            transition={{ delay: index * 0.5, duration: isMobile ? 0.1 : 0.5 }}
             className="m-4 flex w-64 flex-col items-start justify-start gap-2 overflow-hidden rounded-md shadow-lg"
           >
             {article.coverPhotoPublicId && (
