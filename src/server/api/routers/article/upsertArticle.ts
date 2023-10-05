@@ -96,10 +96,12 @@ export const upsertArticle = protectedAdminProcedure
         }
       }
 
-      return ctx.prisma.$transaction(updates);
+      await ctx.prisma.$transaction(updates);
+
+      return input.slug;
     }
 
-    return ctx.prisma.article.create({
+    const createdArticle = await ctx.prisma.article.create({
       data: {
         slug: input.slug,
         ...(input.description && {
@@ -137,4 +139,6 @@ export const upsertArticle = protectedAdminProcedure
         },
       },
     });
+
+    return createdArticle.slug;
   });

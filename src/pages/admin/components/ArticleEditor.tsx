@@ -7,11 +7,19 @@ import React, { useEffect, useState } from "react";
 import { useController, useForm, type SubmitHandler } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 import { ProtectedAdminLayout } from "~/components/ProtectedAdminLayout";
+import { env } from "~/env.mjs";
 import { api } from "~/utils/api";
 
 const Editor = dynamic(() => import("~/components/TextEditor"), { ssr: false });
 
-const ArticleEditor = ({ articleSlug }: { articleSlug?: string }) => {
+const ArticleEditor = ({
+  articleSlug: articleSlugProp,
+}: {
+  articleSlug?: string;
+}) => {
+  const [articleSlug, setArticuleSlug] = useState<string | undefined>(
+    articleSlugProp,
+  );
   const [locale, setLocale] = useState<"es" | "en">("es");
   const [imagePublicId, setImagePublicId] = useState<string | null>(null);
 
@@ -54,12 +62,15 @@ const ArticleEditor = ({ articleSlug }: { articleSlug?: string }) => {
       setImagePublicId(article.data.coverPhotoPublicId ?? null);
       title.field.onChange(article.data.title);
       slug.field.onChange(article.data.slug);
+    } else {
+      title.field.onChange("");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [article.data]);
+  }, [article.data, locale]);
 
   const updateOrCrateArticle = api.article.upsert.useMutation({
-    onSuccess: () => {
+    onSuccess: (newSlug) => {
+      setArticuleSlug(newSlug);
       toast.success("Artículo guardado");
     },
     onError: (err) => {
@@ -73,6 +84,7 @@ const ArticleEditor = ({ articleSlug }: { articleSlug?: string }) => {
     title: string;
     description?: string;
   }> = (data) => {
+    if (!editor) toast.error("Debes agregar contenido para poder guardar");
     if (editor) {
       editor.update(() => {
         const htmlString = $generateHtmlFromNodes(editor);
@@ -97,10 +109,11 @@ const ArticleEditor = ({ articleSlug }: { articleSlug?: string }) => {
         <div className="p-5">
           <div className="flex gap-4">
             <button
+              disabled={updateOrCrateArticle.isLoading}
               className="rounded-lg bg-blue-600 p-1 px-4 text-white hover:bg-blue-950"
               onClick={handleSubmit(onSubmit)}
             >
-              Guardar
+              {updateOrCrateArticle.isLoading ? "Guardando..." : "Guardar"}
             </button>
             <button
               className={`${
@@ -123,7 +136,9 @@ const ArticleEditor = ({ articleSlug }: { articleSlug?: string }) => {
               Inglés
             </button>
             <CldUploadWidget
-              uploadPreset="article_cover_photo"
+              uploadPreset={
+                env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET_COVER_PHOTO
+              }
               onUpload={(res) => {
                 if (
                   typeof res.info === "object" &&
@@ -162,7 +177,7 @@ const ArticleEditor = ({ articleSlug }: { articleSlug?: string }) => {
               <Label htmlFor="description">Descripción:</Label>
               <TextArea className="h-40" {...description.field} />
             </div>
-            {!articleSlug && !article.data?.slug && (
+            {!articleSlug && (
               <div>
                 <Label htmlFor="slug">Slug:</Label>
                 <Input {...slug.field} />
