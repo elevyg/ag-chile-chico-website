@@ -5,6 +5,7 @@ import { CldImage, CldUploadWidget } from "next-cloudinary";
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
 import { useController, useForm, type SubmitHandler } from "react-hook-form";
+import toast, { Toaster } from "react-hot-toast";
 import { ProtectedAdminLayout } from "~/components/ProtectedAdminLayout";
 import { api } from "~/utils/api";
 
@@ -41,7 +42,11 @@ const ArticleEditor = ({ articleSlug }: { articleSlug?: string }) => {
   });
 
   const title = useController({ name: "title", control });
-  const slug = useController({ name: "slug", control });
+  const slug = useController({
+    name: "slug",
+    control,
+    disabled: !!article.data?.slug,
+  });
   const description = useController({ name: "description", control });
 
   useEffect(() => {
@@ -53,7 +58,15 @@ const ArticleEditor = ({ articleSlug }: { articleSlug?: string }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [article.data]);
 
-  const updateOrCrateArticle = api.article.upsert.useMutation();
+  const updateOrCrateArticle = api.article.upsert.useMutation({
+    onSuccess: () => {
+      toast.success("Artículo guardado");
+    },
+    onError: (err) => {
+      toast.error("Error al guardar el artículo");
+      console.error(err);
+    },
+  });
 
   const onSubmit: SubmitHandler<{
     slug: string;
@@ -79,107 +92,110 @@ const ArticleEditor = ({ articleSlug }: { articleSlug?: string }) => {
 
   return (
     <ProtectedAdminLayout>
-      <div className="p-5">
-        <div className="flex gap-4">
-          <button
-            className="rounded-lg bg-blue-600 p-1 px-4 text-white hover:bg-blue-950"
-            onClick={handleSubmit(onSubmit)}
-          >
-            Guardar
-          </button>
-          <button
-            className={`${
-              locale === "es" ? "font-bold" : "font-light"
-            } hover:text-blue-600`}
-            onClick={() => {
-              setLocale("es");
-            }}
-          >
-            Español
-          </button>
-          <button
-            className={`${
-              locale === "en" ? "font-bold" : "font-light"
-            } hover:text-blue-600`}
-            onClick={() => {
-              setLocale("en");
-            }}
-          >
-            Inglés
-          </button>
-          <CldUploadWidget
-            uploadPreset="article_cover_photo"
-            onUpload={(res) => {
-              if (
-                typeof res.info === "object" &&
-                "public_id" in res.info &&
-                typeof res.info.public_id === "string"
-              ) {
-                console.log(res.info);
-                setImagePublicId(res.info.public_id);
-              }
-            }}
-          >
-            {({ open }) => {
-              function handleOnClick(e: React.MouseEvent<HTMLButtonElement>) {
-                e.preventDefault();
-                open();
-              }
-              return (
-                <button
-                  className="rounded-lg bg-slate-700 p-1 px-4 text-white"
-                  onClick={handleOnClick}
-                >
-                  {imagePublicId
-                    ? "Cambiar foto portada"
-                    : "Subir foto portada"}
-                </button>
-              );
-            }}
-          </CldUploadWidget>
-        </div>
-        <div className="mt-5 flex flex-col gap-5">
-          <div>
-            <Label htmlFor="title">Título:</Label>
-            <Input {...title.field} />
+      <>
+        <Toaster />
+        <div className="p-5">
+          <div className="flex gap-4">
+            <button
+              className="rounded-lg bg-blue-600 p-1 px-4 text-white hover:bg-blue-950"
+              onClick={handleSubmit(onSubmit)}
+            >
+              Guardar
+            </button>
+            <button
+              className={`${
+                locale === "es" ? "font-bold" : "font-light"
+              } hover:text-blue-600`}
+              onClick={() => {
+                setLocale("es");
+              }}
+            >
+              Español
+            </button>
+            <button
+              className={`${
+                locale === "en" ? "font-bold" : "font-light"
+              } hover:text-blue-600`}
+              onClick={() => {
+                setLocale("en");
+              }}
+            >
+              Inglés
+            </button>
+            <CldUploadWidget
+              uploadPreset="article_cover_photo"
+              onUpload={(res) => {
+                if (
+                  typeof res.info === "object" &&
+                  "public_id" in res.info &&
+                  typeof res.info.public_id === "string"
+                ) {
+                  console.log(res.info);
+                  setImagePublicId(res.info.public_id);
+                }
+              }}
+            >
+              {({ open }) => {
+                function handleOnClick(e: React.MouseEvent<HTMLButtonElement>) {
+                  e.preventDefault();
+                  open();
+                }
+                return (
+                  <button
+                    className="rounded-lg bg-slate-700 p-1 px-4 text-white"
+                    onClick={handleOnClick}
+                  >
+                    {imagePublicId
+                      ? "Cambiar foto portada"
+                      : "Subir foto portada"}
+                  </button>
+                );
+              }}
+            </CldUploadWidget>
           </div>
-          <div>
-            <Label htmlFor="description">Descripción:</Label>
-            <TextArea className="h-40" {...description.field} />
-          </div>
-          {!articleSlug && (
+          <div className="mt-5 flex flex-col gap-5">
             <div>
-              <Label htmlFor="slug">Slug:</Label>
-              <Input {...slug.field} />
+              <Label htmlFor="title">Título:</Label>
+              <Input {...title.field} />
+            </div>
+            <div>
+              <Label htmlFor="description">Descripción:</Label>
+              <TextArea className="h-40" {...description.field} />
+            </div>
+            {!articleSlug && !article.data?.slug && (
+              <div>
+                <Label htmlFor="slug">Slug:</Label>
+                <Input {...slug.field} />
+              </div>
+            )}
+          </div>
+          <div>
+            {imagePublicId && (
+              <CldImage
+                src={imagePublicId}
+                height={400}
+                width={700}
+                alt="Cover image for article"
+                className="my-5"
+              />
+            )}
+          </div>
+
+          {(article.isLoading || article.isFetching) && !!articleSlug ? (
+            "Cargando..."
+          ) : (
+            <div>
+              <Label>Contenido:</Label>
+              <Editor
+                initialHTMLContent={article.data?.content}
+                onChange={(state, le) => {
+                  setLexicalState(le ?? null);
+                }}
+              />
             </div>
           )}
         </div>
-        <div>
-          {imagePublicId && (
-            <CldImage
-              src={imagePublicId}
-              height={400}
-              width={700}
-              alt="Cover image for article"
-              className="my-5"
-            />
-          )}
-        </div>
-
-        {(article.isLoading || article.isFetching) && !!articleSlug ? (
-          "Cargando..."
-        ) : (
-          <div>
-            <Label>Contenido:</Label>
-            <Editor
-              initialHTMLContent={article.data?.content}
-              onChange={(state, le) => {
-                setLexicalState(le ?? null);
-              }}
-            />
-          </div>
-        )}
-      </div>
+      </>
     </ProtectedAdminLayout>
   );
 };
