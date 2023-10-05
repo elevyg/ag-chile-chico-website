@@ -37,6 +37,7 @@ const WhoAreWe = ({ isMobile }: Props) => {
     >
       <motion.div style={{ translateX }}>
         <Image
+          priority
           src="/logo-ag.png"
           width={400}
           height={400}

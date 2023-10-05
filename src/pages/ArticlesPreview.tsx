@@ -10,7 +10,7 @@ const ArticlesPreview = () => {
   const router = useRouter();
 
   return (
-    <motion.div className="max-w-screen flex snap-x gap-2 overflow-x-scroll p-5">
+    <motion.div className="max-w-screen flex snap-x gap-2 overflow-x-scroll p-5 py-10 md:py-20">
       {articlesPreview.data?.map((article, index) => (
         <button
           key={article.id}
