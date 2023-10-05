@@ -50,16 +50,25 @@ export default function Footer() {
           </a>
         </p>
       </div>
-      <button
-        className="rounded-md bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
-        onClick={
-          sessionData
-            ? () => void signOut()
-            : () => void signIn(undefined, { callbackUrl: "/admin" })
-        }
-      >
-        {sessionData ? "Cerrar sesión" : "Iniciar sesión"}
-      </button>
+      <div className="flex flex-col gap-2">
+        {sessionData?.user.role === "ADMIN" && (
+          <Link href="/admin">
+            <button className="rounded-md bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20">
+              Ir al panel de administración
+            </button>
+          </Link>
+        )}
+        <button
+          className="rounded-md bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
+          onClick={
+            sessionData
+              ? () => void signOut()
+              : () => void signIn(undefined, { callbackUrl: "/admin" })
+          }
+        >
+          {sessionData ? "Cerrar sesión" : "Iniciar sesión"}
+        </button>
+      </div>
     </footer>
   );
 }
