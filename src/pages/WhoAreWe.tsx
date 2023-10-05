@@ -38,7 +38,7 @@ const WhoAreWe = ({ isMobile }: Props) => {
       ref={target}
       className="flex flex-col items-center gap-5 overflow-hidden  p-5 py-20 md:flex-row"
     >
-      <motion.div style={{ translateX }}>
+      <motion.div style={{ translateX: isMobile ? undefined : translateX }}>
         <Image
           priority
           src="/logo-ag.png"
@@ -51,8 +51,7 @@ const WhoAreWe = ({ isMobile }: Props) => {
       <motion.div
         className="flex h-full w-full flex-1 flex-col items-start justify-center gap-5 bg-white"
         style={{
-          translateY: !isMobile ? translateY : undefined,
-          translateX: isMobile ? translateXInverted : undefined,
+          translateY: isMobile ? undefined : translateY,
         }}
       >
         <h3 className="text-2xl font-bold">{t("who-are-we-title")}</h3>

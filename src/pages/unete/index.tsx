@@ -14,7 +14,7 @@ const Unete = () => {
   return (
     <RootLayout>
       <Navbar />
-      <div className="flex flex-col items-center py-20">
+      <div className="flex flex-col items-center p-5 py-20">
         <div className="flex max-w-3xl flex-col gap-3">
           <div className="w-full rounded-lg bg-gradient-to-br from-zinc-800 via-zinc-600 to-zinc-400 p-5 text-white shadow-md">
             <h2 className="pb-2 text-xl font-bold">
