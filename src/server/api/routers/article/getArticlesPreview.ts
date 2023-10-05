@@ -6,7 +6,7 @@ export const getArticlesPreview = publicProcedure
   .query(async ({ ctx, input: { locale } }) => {
     const articles = await ctx.prisma.article.findMany({
       where: { isDeleted: false },
-      orderBy: { updatedAt: "asc" },
+      orderBy: { updatedAt: "desc" },
       select: {
         id: true,
         coverPhotoPublicId: true,
