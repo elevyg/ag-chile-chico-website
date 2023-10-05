@@ -3,7 +3,9 @@ import { useRouter } from "next/router";
 import {
   IoAddCircleSharp,
   IoArrowForwardCircleSharp,
+  IoCheckmarkCircle,
   IoCloseCircleSharp,
+  IoEyeOffSharp,
   IoPencilSharp,
 } from "react-icons/io5";
 import AdminLayout from "~/pages/AdminLayout";
@@ -20,6 +22,7 @@ const Admin = () => {
   const { locale } = useRouter();
   const allArticles = api.article.getAll.useQuery({ locale });
   const softDelete = api.article.softDelete.useMutation();
+  const hardDelete = api.article.hardDelete.useMutation();
 
   return (
     <AdminLayout>
@@ -73,9 +76,26 @@ const Admin = () => {
                     }
                     className="flex items-center justify-center gap-2 hover:font-bold"
                   >
-                    <p>{article.isDeleted ? "Restaurar" : "Eliminar"}</p>
-                    <IoCloseCircleSharp />
+                    <p>{article.isDeleted ? "Restaurar" : "Esconder"}</p>
+                    {article.isDeleted ? (
+                      <IoCheckmarkCircle />
+                    ) : (
+                      <IoEyeOffSharp />
+                    )}
                   </button>
+                  {article.isDeleted && (
+                    <button
+                      onClick={() =>
+                        hardDelete.mutate({
+                          id: article.id,
+                        })
+                      }
+                      className="flex items-center justify-center gap-2 hover:font-bold"
+                    >
+                      <p>{"Eliminar"}</p>
+                      <IoCloseCircleSharp />
+                    </button>
+                  )}
                 </div>
               </div>
             );

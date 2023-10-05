@@ -11,6 +11,7 @@ export const getAll = publicProcedure
   .query(async ({ ctx, input: { locale = "es", showDeleted } }) => {
     const articles = await ctx.prisma.article.findMany({
       where: { isDeleted: showDeleted },
+      orderBy: { updatedAt: "desc" },
       include: {
         title: {
           select: {
@@ -39,10 +40,12 @@ export const getAll = publicProcedure
       },
     });
 
-    return articles.map((article) => ({
-      ...article,
-      content: article.content.Translation[0]?.content,
-      title: article.title.Translation[0]?.content,
-      description: article.description?.Translation[0]?.content,
-    }));
+    return articles
+      .map((article) => ({
+        ...article,
+        content: article.content.Translation[0]?.content,
+        title: article.title.Translation[0]?.content,
+        description: article.description?.Translation[0]?.content,
+      }))
+      .sort((a, b) => (a.isDeleted ? 1 : 0) - (b.isDeleted ? 1 : 0));
   });
