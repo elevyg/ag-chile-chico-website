@@ -19,7 +19,7 @@ const Hero = () => {
 
   return (
     <div ref={target} className={`relative h-screen md:h-[200vh] `}>
-      <div className="sticky left-0 top-0 h-[100vh]">
+      <div className="sticky left-0 top-0 h-[100vh] overflow-hidden">
         <motion.div
           style={{
             scale: !isMobile ? scale : undefined,
