@@ -1,7 +1,7 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 
 export default function Footer() {
   const { data: sessionData } = useSession();
@@ -23,7 +23,11 @@ export default function Footer() {
       </div>
       <button
         className="rounded-md bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
-        onClick={sessionData ? () => void signOut() : () => void signIn()}
+        onClick={
+          sessionData
+            ? () => void signOut()
+            : () => void signIn(undefined, { callbackUrl: "/admin" })
+        }
       >
         {sessionData ? "Cerrar sesión" : "Iniciar sesión"}
       </button>

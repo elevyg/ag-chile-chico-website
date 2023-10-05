@@ -7,7 +7,7 @@ const Navbar = () => {
   const { t } = useTranslation("common");
 
   return (
-    <nav className="from-lightYellow to-darkYellow z-50 flex h-[80px] items-center  justify-between  bg-gradient-to-l p-5 text-white">
+    <nav className="z-50 flex h-[80px] items-center justify-between bg-gradient-to-l  from-lightYellow  to-darkYellow p-5 text-white">
       <div className="flex items-center gap-2 font-extrabold">
         <Image src="/sun-icon.png" alt="sun-icon" width={40} height={40} />
         <Link href="/">{t("navbar-title")}</Link>

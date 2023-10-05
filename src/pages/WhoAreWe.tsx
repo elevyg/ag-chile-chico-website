@@ -33,7 +33,7 @@ const WhoAreWe = ({ isMobile }: Props) => {
   return (
     <motion.div
       ref={target}
-      className="flex flex-col items-center gap-5 overflow-hidden  p-5 md:flex-row"
+      className="flex flex-col items-center gap-5 overflow-hidden  p-5 py-20 md:flex-row"
     >
       <motion.div style={{ translateX }}>
         <Image
@@ -41,7 +41,7 @@ const WhoAreWe = ({ isMobile }: Props) => {
           width={400}
           height={400}
           alt="Logo Asociación Gremial Chile Chico"
-          className="h-40 w-40 object-scale-down md:h-full md:w-full"
+          className="h-50 w-50 object-scale-down md:h-full md:w-full"
         />
       </motion.div>
       <motion.div
@@ -53,7 +53,7 @@ const WhoAreWe = ({ isMobile }: Props) => {
       >
         <h3 className="text-2xl font-bold">{t("who-are-we-title")}</h3>
         <p>{t("about-ag-description")}</p>
-        <button className="mt-5 w-full rounded-md border-2 border-darkYellow p-5 text-lg font-bold text-darkYellow hover:bg-darkYellow hover:text-white">
+        <button className="mt-5 w-full max-w-4xl self-center rounded-md border-2 border-darkYellow p-5 text-lg font-bold text-darkYellow hover:bg-darkYellow hover:text-white">
           {t("ag-call-to-action")}
         </button>
       </motion.div>

@@ -2,8 +2,6 @@ import { easeIn, motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import { useRef } from "react";
 import { useTranslation } from "next-i18next";
-import { IoMenuOutline } from "react-icons/io5";
-import Image from "next/image";
 
 const LandingNavbar = () => {
   const target = useRef<HTMLDivElement | null>(null);

@@ -20,7 +20,7 @@ export const ProtectedAdminLayout = ({ children }: Props) => {
 
     if (unAuthorized || !isAdmin) {
       void router.push({
-        pathname: "/",
+        pathname: "/unauthorized",
         query: { returnUrl: router.asPath },
       });
     }
