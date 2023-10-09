@@ -135,7 +135,7 @@ const Article = ({ slug }: InferGetStaticPropsType<typeof getStaticProps>) => {
           )}
         </div>
         <div className="max-w-3xl px-5">
-          <div dangerouslySetInnerHTML={{ __html: content }} />d
+          <div dangerouslySetInnerHTML={{ __html: content }} />
         </div>
       </article>
     </RootLayout>
