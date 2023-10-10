@@ -50,7 +50,7 @@ export default function Home(
       <RootLayout>
         <LandingNavbar />
         <Hero isMobile={props.isMobile} />
-        <ArticlesPreview isMobile={props.isMobile} />
+        <ArticlesPreview />
         <MapSection />
         <WhoAreWe isMobile={props.isMobile} />
       </RootLayout>

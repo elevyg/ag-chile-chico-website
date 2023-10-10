@@ -2,13 +2,8 @@ import { motion } from "framer-motion";
 import { CldImage } from "next-cloudinary";
 import { useRouter } from "next/router";
 import { api } from "~/utils/api";
-import { isMobile } from "react-device-detect";
 
-interface Props {
-  isMobile: boolean;
-}
-
-const ArticlesPreview = ({ isMobile }: Props) => {
+const ArticlesPreview = () => {
   const { locale } = useRouter();
   const articlesPreview = api.article.getPreviews.useQuery({
     locale: locale ?? "es",
@@ -17,17 +12,12 @@ const ArticlesPreview = ({ isMobile }: Props) => {
 
   return (
     <motion.div className="max-w-screen flex snap-x gap-2 overflow-x-scroll p-5 py-10 md:py-20">
-      {articlesPreview.data?.map((article, index) => (
+      {articlesPreview.data?.map((article) => (
         <button
           key={article.id}
           onClick={() => void router.push(`/articulos/${article.slug}`)}
         >
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: index * 0.5, duration: isMobile ? 0.1 : 0.5 }}
-            className="m-4 flex w-64 flex-col items-start justify-start gap-2 overflow-hidden rounded-md shadow-lg"
-          >
+          <div className="m-4 flex w-64 flex-col items-start justify-start gap-2 overflow-hidden rounded-md shadow-lg">
             {article.coverPhotoPublicId && (
               <motion.div
                 className="relative w-full"
@@ -48,7 +38,7 @@ const ArticlesPreview = ({ isMobile }: Props) => {
                 </div>
               </motion.div>
             )}
-          </motion.div>
+          </div>
         </button>
       ))}
     </motion.div>
