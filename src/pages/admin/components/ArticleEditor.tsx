@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useController, useForm, type SubmitHandler } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
-import { IoArrowBackOutline, IoEyeOffSharp, IoEyeSharp } from "react-icons/io5";
+import { IoArrowBackOutline, IoEyeSharp } from "react-icons/io5";
 import { ProtectedAdminLayout } from "~/components/ProtectedAdminLayout";
 import { env } from "~/env.mjs";
 import { api } from "~/utils/api";
@@ -90,10 +90,9 @@ const ArticleEditor = ({
     if (editor) {
       editor.update(() => {
         const htmlString = $generateHtmlFromNodes(editor);
-        console.log("htmlString", htmlString);
-        console.log(data);
+
         updateOrCrateArticle.mutate({
-          slug: data.slug,
+          slug: articleSlug ?? data.slug,
           title: data.title,
           content: htmlString,
           locale,
@@ -169,7 +168,6 @@ const ArticleEditor = ({
                   "public_id" in res.info &&
                   typeof res.info.public_id === "string"
                 ) {
-                  console.log(res.info);
                   setImagePublicId(res.info.public_id);
                 }
               }}
