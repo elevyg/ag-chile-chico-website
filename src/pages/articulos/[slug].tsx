@@ -23,6 +23,7 @@ const classMap = new Map(
     p: "leading-8 py-2",
     h1: "text-2xl font-bold",
     ol: "list-decimal list-inside",
+    a: "text-sky-400 underline"
   }),
 );
 
