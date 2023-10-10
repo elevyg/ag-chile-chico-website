@@ -21,6 +21,9 @@ const Hero = ({ isMobile }: Props) => {
   return (
     <div ref={target} className={`relative h-screen md:h-[200vh] `}>
       <div className="sticky left-0 top-0 h-[100vh] overflow-hidden">
+        <div className="absolute bottom-5 right-5 z-50 hidden md:block">
+          <ScrollDownIcon className="animate-bounce fill-white opacity-50 md:h-20 md:w-20" />
+        </div>
         <motion.div
           style={{
             scale: !isMobile ? scale : undefined,
@@ -48,6 +51,22 @@ const Hero = ({ isMobile }: Props) => {
         </video>
       </div>
     </div>
+  );
+};
+
+const ScrollDownIcon = (props: { className?: string }) => {
+  return (
+    <svg
+      id="Layer_1"
+      // height="100"
+      viewBox="0 0 512 512"
+      // width="100"
+      xmlns="http://www.w3.org/2000/svg"
+      data-name="Layer 1"
+      {...props}
+    >
+      <path d="m256 0c-141.159 0-256 114.841-256 256s114.841 256 256 256 256-114.841 256-256-114.841-256-256-256zm114.788 292.1-103.475 103.469a16 16 0 0 1 -22.626 0l-103.475-103.469a16 16 0 0 1 22.627-22.627l92.161 92.156 92.161-92.159a16 16 0 1 1 22.627 22.63zm0-133.039-103.475 103.47a16 16 0 0 1 -22.626 0l-103.475-103.473a16 16 0 0 1 22.627-22.627l92.161 92.16 92.161-92.16a16 16 0 1 1 22.627 22.627z" />
+    </svg>
   );
 };
 
