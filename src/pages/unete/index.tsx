@@ -23,10 +23,10 @@ const Unete = () => {
             <p>
               Escríbenos a nuestro correo electrónico{" "}
               <a
-                href="mailto:agturismo@gmail.com"
+                href="mailto:contactoturismochilechico@gmail.com"
                 className="text-sky-400 underline"
               >
-                agturismo@gmail.com
+                contactoturismochilechico@gmail.com
               </a>
               para conocer los requisitos y beneficios.
             </p>
