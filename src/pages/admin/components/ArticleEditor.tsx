@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useController, useForm, type SubmitHandler } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
-import { IoArrowBackOutline } from "react-icons/io5";
+import { IoArrowBackOutline, IoEyeOffSharp, IoEyeSharp } from "react-icons/io5";
 import { ProtectedAdminLayout } from "~/components/ProtectedAdminLayout";
 import { env } from "~/env.mjs";
 import { api } from "~/utils/api";
@@ -148,6 +148,17 @@ const ArticleEditor = ({
             >
               Inglés
             </button>
+            {articleSlug && (
+              <button
+                className="flex items-center justify-center gap-2 hover:font-bold"
+                onClick={() => {
+                  void router.push(`/articulos/${articleSlug}`);
+                }}
+              >
+                Ver
+                <IoEyeSharp />
+              </button>
+            )}
             <CldUploadWidget
               uploadPreset={
                 env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET_COVER_PHOTO
