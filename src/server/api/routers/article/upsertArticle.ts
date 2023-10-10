@@ -13,6 +13,7 @@ export const upsertArticle = protectedAdminProcedure
     }),
   )
   .mutation(async ({ ctx, input }) => {
+    console.log("input", input.slug);
     const article = await ctx.prisma.article.findUnique({
       where: { slug: input.slug },
       include: {
@@ -26,7 +27,10 @@ export const upsertArticle = protectedAdminProcedure
       },
     });
 
+    console.log("article", article);
+
     if (article) {
+      console.log("HERE");
       const updateArticle = ctx.prisma.article.update({
         where: { slug: input.slug },
         data: {

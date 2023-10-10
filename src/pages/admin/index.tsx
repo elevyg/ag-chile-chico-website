@@ -39,7 +39,6 @@ const Admin = () => {
         </div>
         <div className="flex flex-col gap-2">
           {allArticles.data?.map((article) => {
-            console.log(article.title);
             return (
               <div
                 key={article.id}
