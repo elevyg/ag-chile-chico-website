@@ -20,10 +20,6 @@ const WhoAreWe = ({ isMobile }: Props) => {
     (progress) => (1 - progress) * -400,
   );
 
-  const translateXInverted = useTransform(
-    scrollYProgress,
-    (progress) => (1 - progress) * 400,
-  );
   const translateY = useTransform(
     scrollYProgress,
     (progress) => (1 - progress) * -400,
@@ -58,7 +54,7 @@ const WhoAreWe = ({ isMobile }: Props) => {
         <p>{t("about-ag-description")}</p>
         <button
           onClick={() => void router.push("/unete")}
-          className="mt-5 w-full max-w-4xl self-center rounded-md border-2 border-darkYellow p-5 text-lg font-bold text-darkYellow hover:bg-darkYellow hover:text-white"
+          className="mt-5 w-full max-w-4xl self-center rounded-md border-2 border-darkYellow p-5 text-lg font-bold text-darkYellow hover:border-white  hover:bg-gradient-to-l  hover:from-lightYellow hover:to-darkYellow hover:text-white"
         >
           {t("ag-call-to-action")}
         </button>
