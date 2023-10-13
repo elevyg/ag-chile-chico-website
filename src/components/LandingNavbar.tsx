@@ -2,6 +2,7 @@ import { easeIn, motion, useScroll, useTransform } from "framer-motion";
 import { useTranslation } from "next-i18next";
 import Link from "next/link";
 import { useRef } from "react";
+import { FaFacebookSquare } from "react-icons/fa";
 
 const LandingNavbar = () => {
   const target = useRef<HTMLDivElement | null>(null);
@@ -53,6 +54,17 @@ const LandingNavbar = () => {
         </motion.svg>
         <Link href="/">{t("navbar-title")}</Link>
       </motion.div>
+      <motion.button
+        style={{ color }}
+        onClick={() => {
+          window.open(
+            "https://www.facebook.com/AGTurismoyCulturaChileChico",
+            "_blank",
+          );
+        }}
+      >
+        <FaFacebookSquare size={30} />
+      </motion.button>
     </motion.nav>
   );
 };
