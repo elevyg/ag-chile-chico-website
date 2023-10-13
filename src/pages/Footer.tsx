@@ -44,9 +44,12 @@ export default function Footer() {
       <div className="text-white">
         <p>Bernardo Ohiggins, #333 Chile Chico, Chile</p>
         <p>
-          Fono:{" "}
-          <a href="tel:+56227318336" className="text-sky-400">
-            +56 2 2731 8336
+          Contacto:{" "}
+          <a
+            href="mailto:contactoturismochilechico@gmail.com"
+            className="text-sky-400"
+          >
+            contactoturismochilechico@gmail.com
           </a>
         </p>
       </div>
