@@ -11,6 +11,7 @@ const MapSection = () => {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       className="relative flex flex-col"
+      id="mapa"
     >
       <div className="absolute z-20 h-10 w-full bg-gradient-to-b from-slate-200 to-transparent pt-5">
         <h2 className="px-5 text-xl">{t("map-section-title")}</h2>

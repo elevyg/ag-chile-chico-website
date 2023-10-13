@@ -51,4 +51,8 @@ export const agMembers = {
     placeId:
       "EjFNYW51ZWwgUm9kcsOtZ3VleiA0NDMsIENoaWxlIENoaWNvLCBBeXPDqW4sIENoaWxlIjESLwoUChIJt5eqmUYr7b0R4oYfNWy-yAoQuwMqFAoSCYsigc5FK-29EUFDVm7uin4E",
   },
+  "kon-aiken": {
+    name: "Kon Aiken Turismo",
+    placeId: "ChIJ3bqoIUQr7b0RvcpfcX5mq78",
+  },
 };
