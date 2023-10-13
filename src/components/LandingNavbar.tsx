@@ -1,7 +1,7 @@
 import { easeIn, motion, useScroll, useTransform } from "framer-motion";
+import { useTranslation } from "next-i18next";
 import Link from "next/link";
 import { useRef } from "react";
-import { useTranslation } from "next-i18next";
 
 const LandingNavbar = () => {
   const target = useRef<HTMLDivElement | null>(null);
@@ -53,9 +53,6 @@ const LandingNavbar = () => {
         </motion.svg>
         <Link href="/">{t("navbar-title")}</Link>
       </motion.div>
-      {/* <div className="mx-5 flex items-center justify-center gap-2 rounded-md  border-[1px] border-zinc-800 p-2 md:hidden">
-        <IoMenuOutline size="1.5em" />
-      </div> */}
     </motion.nav>
   );
 };
