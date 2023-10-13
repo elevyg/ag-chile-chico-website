@@ -111,9 +111,6 @@ function Map({ places }: { places: { placeId: string; name: string }[] }) {
         m();
       }, i * 550);
     });
-
-    for (const m of markers) {
-    }
   }, [places]);
 
   useEffect(() => {
