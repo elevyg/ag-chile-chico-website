@@ -18,7 +18,7 @@ export default function RootLayout({
     <>
       <CldOgImage
         src="ag-chile-chico-website/foto_islas_vhlcy2"
-        title="AG Chile Chico"
+        title="Chile Chico Turismo"
         alt="Islas de Chile Chico"
       />
       <Head>
