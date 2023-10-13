@@ -22,7 +22,7 @@ export default function RootLayout({
         alt="Islas de Chile Chico"
       />
       <Head>
-        <title>AG Chile Chico</title>
+        <title>Chile Chico Turismo</title>
         <meta
           name="description"
           content="Descubre todo lo que necesitas para recorrer Chile Chico, somos la asociación gremial de turismo y cultura de Chile Chico."
