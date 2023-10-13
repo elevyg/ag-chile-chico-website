@@ -17,12 +17,26 @@ const Hero = ({ isMobile }: Props) => {
 
   const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1, 0]);
 
+  const scrolltoHash = function (element_id: string) {
+    const element = document.getElementById(element_id);
+    element?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+      inline: "nearest",
+    });
+  };
+
   return (
     <div ref={target} className={`relative h-screen md:h-[200vh] `}>
       <div className="sticky left-0 top-0 h-[100vh] overflow-hidden">
-        <div className="absolute bottom-5 right-5 z-50 hidden md:block">
+        <button
+          className="absolute bottom-5 right-5 z-50 hidden md:block"
+          onClick={() => {
+            scrolltoHash("article_preview_section");
+          }}
+        >
           <ScrollDownIcon className="animate-bounce fill-white opacity-50 md:h-20 md:w-20" />
-        </div>
+        </button>
         <motion.div
           style={{
             scale: !isMobile ? scale : undefined,
