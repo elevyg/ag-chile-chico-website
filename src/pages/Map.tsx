@@ -16,7 +16,10 @@ const MapSection = () => {
       <div className="absolute z-20 h-10 w-full bg-gradient-to-b from-slate-200 to-transparent pt-5">
         <h2 className="px-5 text-xl">{t("map-section-title")}</h2>
       </div>
-      <Map places={Object.values(agMembers)} />
+      <Map
+        places={Object.values(agMembers)}
+        seeMoreLabel={t("see-more-map-label")}
+      />
     </motion.div>
   );
 };

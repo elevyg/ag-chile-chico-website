@@ -7,7 +7,13 @@ const loader = new Loader({
 
 // https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJrTLr-GyuEmsRBfy61i59si0
 
-function Map({ places }: { places: { placeId: string; name: string }[] }) {
+function Map({
+  places,
+  seeMoreLabel = "Ver más",
+}: {
+  places: { placeId: string; name: string }[];
+  seeMoreLabel?: string;
+}) {
   const mapRef = useRef(null);
 
   const loadMap = useCallback(async () => {
@@ -95,6 +101,12 @@ function Map({ places }: { places: { placeId: string; name: string }[] }) {
 
                 placeAddressElement.textContent = place.formatted_address!;
                 content.appendChild(placeAddressElement);
+
+                const goText = document.createElement("p");
+                goText.textContent = seeMoreLabel;
+                goText.style.color = "blue";
+                goText.style.textDecoration = "underline";
+                content.appendChild(goText);
 
                 link.appendChild(content);
 
