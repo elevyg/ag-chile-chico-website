@@ -1,31 +1,21 @@
 import { type NextRequest, NextResponse } from "next/server";
 
-const SHORT_LINKS: Record<string, string> = {
-  "/entradas-parque":
-    "https://tickets.pasesparques.cl/pt/events/parque-nacional-patagonia-sector-jeinimeni",
-};
-
-const LOCALES = new Set(["en", "es"]);
-
-function pathnameWithoutLocale(pathname: string) {
-  const segments = pathname.split("/");
-  const maybeLocale = segments[1];
-  if (maybeLocale && LOCALES.has(maybeLocale)) {
-    return `/${segments.slice(2).join("/")}`;
-  }
-  return pathname;
-}
+const PARK_TICKETS_URL =
+  "https://tickets.pasesparques.cl/pt/events/parque-nacional-patagonia-sector-jeinimeni";
 
 export function middleware(request: NextRequest) {
-  const path = pathnameWithoutLocale(request.nextUrl.pathname);
-  const destination = SHORT_LINKS[path];
-  if (destination) {
-    return NextResponse.redirect(destination, 302);
+  const pathname = request.nextUrl.pathname.replace(/^\/(en|es)(?=\/|$)/, "");
+  if (pathname === "/entradas-parque") {
+    return NextResponse.redirect(PARK_TICKETS_URL, 302);
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/entradas-parque", "/:locale(en|es)/entradas-parque"],
+  matcher: [
+    "/entradas-parque",
+    "/en/entradas-parque",
+    "/es/entradas-parque",
+  ],
 };
