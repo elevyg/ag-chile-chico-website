@@ -93,17 +93,25 @@ export async function getStaticProps(
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const articles = await prisma.article.findMany({
-    select: { slug: true },
-  });
-  return {
-    paths: articles.map((article) => ({
-      params: {
-        slug: article.slug,
-      },
-    })),
-    fallback: "blocking",
-  };
+  try {
+    const articles = await prisma.article.findMany({
+      select: { slug: true },
+    });
+    return {
+      paths: articles.map((article) => ({
+        params: {
+          slug: article.slug,
+        },
+      })),
+      fallback: "blocking",
+    };
+  } catch (error) {
+    console.error("getStaticPaths failed", error);
+    return {
+      paths: [],
+      fallback: "blocking",
+    };
+  }
 };
 
 const Article = ({ slug }: InferGetStaticPropsType<typeof getStaticProps>) => {

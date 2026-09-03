@@ -42,7 +42,9 @@
     ".next/types/**/*.ts"
 , "src/console.ts"  ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "scripts",
+    "prisma/seed.mjs"
   ],
   "typeRoots": [
     "node_modules/@types",
