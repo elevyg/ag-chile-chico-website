@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { PrismaLibSql } from "@prisma/adapter-libsql";
 
 import { env } from "~/env.mjs";
 
@@ -8,9 +9,26 @@ const globalForPrisma = globalThis as unknown as {
 
 export const prisma =
   globalForPrisma.prisma ??
-  new PrismaClient({
-    // log:
-    //   env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
-  });
+  (() => {
+    const tursoDatabaseUrl = env.TURSO_DATABASE_URL;
+    const tursoAuthToken = env.TURSO_AUTH_TOKEN;
+
+    const hasTurso =
+      typeof tursoDatabaseUrl === "string" &&
+      tursoDatabaseUrl.length > 0 &&
+      typeof tursoAuthToken === "string" &&
+      tursoAuthToken.length > 0;
+
+    const adapter = hasTurso
+      ? new PrismaLibSql({
+          url: tursoDatabaseUrl,
+          authToken: tursoAuthToken,
+        })
+      : new PrismaLibSql({
+          url: env.DATABASE_URL,
+        });
+
+    return new PrismaClient({ adapter });
+  })();
 
 if (env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;

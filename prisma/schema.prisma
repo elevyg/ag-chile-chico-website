@@ -3,11 +3,11 @@
 
 generator client {
     provider = "prisma-client-js"
+    previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
-    provider     = "mysql"
-    url          = env("DATABASE_URL")
+    provider     = "sqlite"
     relationMode = "prisma"
 }
 
@@ -18,12 +18,12 @@ model Account {
     type              String
     provider          String
     providerAccountId String
-    refresh_token     String? @db.LongText
-    access_token      String? @db.LongText
+    refresh_token     String?
+    access_token      String?
     expires_at        Int?
     token_type        String?
     scope             String?
-    id_token          String? @db.LongText
+    id_token          String?
     session_state     String?
     user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -79,7 +79,7 @@ model Article {
     author             User?        @relation(fields: [authorId], references: [id], onDelete: Cascade)
     createdAt          DateTime     @default(now())
     updatedAt          DateTime     @updatedAt
-    coverPhotoPublicId String?      @db.LongText
+    coverPhotoPublicId String?
     isDeleted          Boolean      @default(false)
 
     @@index([authorId])
@@ -104,8 +104,8 @@ model Translation {
     updatedAt     DateTime    @updatedAt
     textContent   TextContent @relation(fields: [textContentId], references: [id])
     textContentId String
-    content       String      @db.LongText
-    translation   String?     @db.LongText
+    content       String
+    translation   String?
     Language      Language    @relation(fields: [languageId], references: [languageId])
     languageId    String
 

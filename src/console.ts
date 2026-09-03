@@ -1,6 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-
-const db = new PrismaClient();
+import { prisma } from "~/server/db";
 
 const main = async () => {
   await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -9,11 +7,11 @@ const main = async () => {
 
 main()
   .then(async () => {
-    await db.$disconnect();
+    await prisma.$disconnect();
   })
   .catch(async (e) => {
     console.error(e);
 
-    await db.$disconnect();
+    await prisma.$disconnect();
     process.exit(1);
   });
