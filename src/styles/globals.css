@@ -37,3 +37,7 @@
 
 @tailwind components;
 @tailwind utilities;
+
+.pac-container {
+  z-index: 10000;
+}

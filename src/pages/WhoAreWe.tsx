@@ -52,12 +52,20 @@ const WhoAreWe = ({ isMobile }: Props) => {
       >
         <h3 className="text-2xl font-bold">{t("who-are-we-title")}</h3>
         <p>{t("about-ag-description")}</p>
-        <button
-          onClick={() => void router.push("/unete")}
-          className="mt-5 w-full max-w-4xl self-center rounded-md border-2 border-darkYellow p-5 text-lg font-bold text-darkYellow hover:border-white  hover:bg-gradient-to-l  hover:from-lightYellow hover:to-darkYellow hover:text-white"
-        >
-          {t("ag-call-to-action")}
-        </button>
+        <div className="mt-5 flex w-full max-w-4xl flex-col gap-3 self-center">
+          <button
+            onClick={() => void router.push("/miembros")}
+            className="w-full rounded-md bg-gradient-to-l from-lightYellow to-darkYellow p-5 text-lg font-bold text-white hover:from-darkYellow hover:to-darkYellow"
+          >
+            {t("members-call-to-action")}
+          </button>
+          <button
+            onClick={() => void router.push("/unete")}
+            className="w-full rounded-md border-2 border-darkYellow p-5 text-lg font-bold text-darkYellow hover:border-white hover:bg-gradient-to-l hover:from-lightYellow hover:to-darkYellow hover:text-white"
+          >
+            {t("ag-call-to-action")}
+          </button>
+        </div>
       </motion.div>
     </motion.div>
   );

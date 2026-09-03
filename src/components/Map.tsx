@@ -1,9 +1,5 @@
-import { Loader } from "@googlemaps/js-api-loader";
 import { useCallback, useEffect, useRef } from "react";
-
-const loader = new Loader({
-  apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
-});
+import { googleMapsLoader } from "~/utils/googleMaps";
 
 // https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJrTLr-GyuEmsRBfy61i59si0
 
@@ -17,9 +13,9 @@ function Map({
   const mapRef = useRef(null);
 
   const loadMap = useCallback(async () => {
-    await loader.importLibrary("maps");
+    await googleMapsLoader.importLibrary("maps");
 
-    await loader.importLibrary("places");
+    await googleMapsLoader.importLibrary("places");
 
     const infowindow = new google.maps.InfoWindow();
 

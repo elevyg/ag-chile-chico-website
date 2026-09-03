@@ -27,6 +27,7 @@ export const getServerSideProps = async ({
   };
 
   await ssg.article.getPreviews.prefetch({ locale });
+  await ssg.member.listPublished.prefetch();
 
   return {
     props: {

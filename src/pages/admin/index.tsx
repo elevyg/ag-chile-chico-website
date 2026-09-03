@@ -9,6 +9,7 @@ import {
   IoPencilSharp,
 } from "react-icons/io5";
 import AdminLayout from "~/pages/AdminLayout";
+import AdminNav from "~/components/AdminNav";
 import { api } from "~/utils/api";
 import { translationServerProps } from "~/utils/translationServerProps";
 
@@ -26,6 +27,7 @@ const Admin = () => {
 
   return (
     <AdminLayout>
+      <AdminNav />
       <div className="">
         <div className="mb-5 flex items-center justify-between">
           <h1 className="text-2xl">Artículos</h1>

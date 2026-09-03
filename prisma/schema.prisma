@@ -122,3 +122,16 @@ model Language {
 
     @@index([languageId])
 }
+
+model Member {
+    id          String   @id @default(cuid())
+    slug        String   @unique
+    name        String
+    placeId     String
+    address     String?
+    mapsUrl     String?
+    sortOrder   Int      @default(0)
+    isPublished Boolean  @default(true)
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+}

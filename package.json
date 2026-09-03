@@ -9,6 +9,7 @@
     "lint": "next lint",
     "migrate:turso:schema": "node scripts/turso-apply-schema.mjs",
     "migrate:turso:data": "node scripts/turso-migrate-data.mjs",
+    "db:seed": "node prisma/seed.mjs",
     "start": "next start"
   },
   "dependencies": {
