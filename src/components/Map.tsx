@@ -119,7 +119,7 @@ function Map({
         m();
       }, i * 550);
     });
-  }, [places]);
+  }, [places, seeMoreLabel]);
 
   useEffect(() => {
     loadMap().catch((err) => console.error(err));

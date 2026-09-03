@@ -1,6 +1,6 @@
 import { $generateNodesFromDOM } from "@lexical/html";
-import { $getRoot, $insertNodes, LexicalEditor } from "lexical";
-import { ComponentProps, type FC } from "react";
+import { $getRoot, $insertNodes, type LexicalEditor } from "lexical";
+import { type ComponentProps, type FC } from "react";
 import {
   AlignDropdown,
   BackgroundColorPicker,
