@@ -34,13 +34,13 @@ export const memberRouter = createTRPCRouter({
   upsert: protectedAdminProcedure
     .input(memberInput)
     .mutation(async ({ ctx, input }) => {
-      const slug = slugify(input.slug?.trim() || input.name);
+      const slug = slugify(input.slug?.trim() ?? input.name);
       const data = {
         name: input.name.trim(),
         slug,
         placeId: input.placeId.trim(),
-        address: input.address?.trim() || null,
-        mapsUrl: input.mapsUrl?.trim() || null,
+        address: input.address?.trim() ?? null,
+        mapsUrl: input.mapsUrl?.trim() ?? null,
         sortOrder: input.sortOrder ?? 0,
         isPublished: input.isPublished ?? true,
       };
