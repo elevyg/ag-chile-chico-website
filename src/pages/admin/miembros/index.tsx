@@ -71,8 +71,8 @@ const AdminMembers = () => {
     setForm((current) => ({
       ...(current ?? emptyForm()),
       placeId: place.placeId,
-      name: current?.name || place.name,
-      slug: current?.slug || slugify(place.name),
+      name: current?.name ? current.name : place.name,
+      slug: current?.slug ? current.slug : slugify(place.name),
       address: place.address ?? current?.address ?? "",
       mapsUrl: place.mapsUrl ?? current?.mapsUrl ?? "",
     }));
