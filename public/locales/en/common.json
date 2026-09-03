@@ -1,5 +1,9 @@
 {
   "navbar-title": "Chile Chico Tourism",
   "spanish": "Spanish",
-  "english": "English"
+  "english": "English",
+  "qr-site-title": "Website QR code",
+  "qr-park-title": "Park tickets QR code",
+  "qr-download-png": "Download PNG",
+  "qr-download-svg": "Download SVG"
 }

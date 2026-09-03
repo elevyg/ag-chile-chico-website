@@ -1,5 +1,9 @@
 {
   "navbar-title": "Chile Chico Turismo",
   "spanish": "Español",
-  "english": "Inglés"
+  "english": "Inglés",
+  "qr-site-title": "Código QR del sitio",
+  "qr-park-title": "Código QR de entradas al parque",
+  "qr-download-png": "Descargar PNG",
+  "qr-download-svg": "Descargar SVG"
 }
