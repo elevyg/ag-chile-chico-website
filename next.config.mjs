@@ -6,9 +6,6 @@
 import i18nConfig from "./next-i18next.config.mjs";
 await import("./src/env.mjs");
 
-const PARK_TICKETS_URL =
-  "https://tickets.pasesparques.cl/pt/events/parque-nacional-patagonia-sector-jeinimeni";
-
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
@@ -19,15 +16,6 @@ const config = {
    * @see https://github.com/vercel/next.js/issues/41980
    */
   i18n: i18nConfig.i18n,
-  async redirects() {
-    return [
-      {
-        source: "/entradas-parque",
-        destination: PARK_TICKETS_URL,
-        permanent: false,
-      },
-    ];
-  },
 };
 
 export default config;

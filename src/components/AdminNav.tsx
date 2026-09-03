@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 const links = [
   { href: "/admin", label: "Artículos" },
   { href: "/admin/miembros", label: "Miembros" },
+  { href: "/admin/qr", label: "QR y entradas" },
 ];
 
 const AdminNav = () => {
