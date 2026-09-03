@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 
 const SHORT_LINKS: Record<string, string> = {
   "/entradas-parque":
-    "https://www.pasesparques.tur.com/es/cochrane-295/parque-nacional-patagonia-sector-jeinimeni-3416",
+    "https://tickets.pasesparques.cl/pt/events/parque-nacional-patagonia-sector-jeinimeni",
 };
 
 const LOCALES = new Set(["en", "es"]);
